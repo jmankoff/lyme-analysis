@@ -1,0 +1,249 @@
+{
+   "applications_crashes": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "package_name": "str", 
+      "application_name": "str", 
+      "application_version": "int32", 
+      "error_short": "str", 
+      "error_long": "str", 
+      "error_condition": "int32", 
+      "is_system_app": "int32"
+   },  
+   "applications_foreground": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "package_name": "str", 
+      "application_name": "str", 
+      "is_system_app": "int32"
+   },  
+   "applications_history": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "package_name": "str", 
+      "application_name": "str", 
+      "process_importance": "int32", 
+      "process_id": "int32", 
+      "double_end_timestamp": "int64", 
+      "is_system_app": "int32"
+   },  
+   "applications_notifications": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "package_name": "str", 
+      "application_name": "str", 
+      "text": "str", 
+      "sound": "str", 
+      "vibrate": "str", 
+      "defaults": "int32", 
+      "flags": "int32"
+   },  
+   "barometer": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "double_values_0": "float64", 
+      "accuracy": "int32", 
+      "label": "str"
+   },  
+   "battery": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "battery_status": "int32", 
+      "battery_level": "int32", 
+      "battery_scale": "int32", 
+      "battery_voltage": "int32", 
+      "battery_temperature": "int32", 
+      "battery_adaptor": "int32", 
+      "battery_health": "int32", 
+      "battery_technology": "str"
+   },  
+   "battery_charges": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "battery_start": "int32", 
+      "battery_end": "int32", 
+      "double_end_timestamp": "int64"
+   },  
+   "battery_discharges": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "battery_start": "int32", 
+      "battery_end": "int32", 
+      "double_end_timestamp": "int64"
+   },  
+   "bluetooth": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "bt_address": "str", 
+      "bt_name": "str", 
+      "bt_rssi": "int32", 
+      "label": "str"
+   },  
+   "calls": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "call_type": "int32", 
+      "call_duration": "int32", 
+      "trace": "str"
+   },  
+   "fitbit_data": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "fitbit_id": "str", 
+      "fitbit_data_type": "str", 
+      "fitbit_data": "str"
+   },  
+   "locations": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "double_latitude": "float64", 
+      "double_longitude": "float64", 
+      "double_bearing": "float64", 
+      "double_speed": "float64", 
+      "double_altitude": "float64", 
+      "provider": "str", 
+      "accuracy": "float64", 
+      "label": "str"
+   },  
+   "locations_visit": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "double_latitude": "float64", 
+      "double_longitude": "float64", 
+      "double_arrival": "int64", 
+      "double_departure": "int64", 
+      "address": "str", 
+      "name": "str", 
+      "provider": "str", 
+      "accuracy": "int32", 
+      "label": "str"
+   },  
+   "messages": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "message_type": "int32", 
+      "trace": "str"
+   },  
+   "network": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "network_type": "int32", 
+      "network_subtype": "str", 
+      "network_state": "int32"
+   },  
+   "network_traffic": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "network_type": "int32", 
+      "double_received_bytes": "int64", 
+      "double_sent_bytes": "int64", 
+      "double_received_packets": "int64", 
+      "double_sent_packets": "int64"
+   },  
+   "plugin_contacts": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "name": "str", 
+      "phone_numbers": "str", 
+      "emails": "str", 
+      "groups": "str", 
+      "sync_date": "int64"
+   },  
+   "plugin_google_activity_recognition": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "activity_name": "str", 
+      "activity_type": "int32", 
+      "confidence": "int32", 
+      "activities": "str"
+   },  
+   "plugin_ios_activity_recognition": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "activities": "str", 
+      "confidence": "int32", 
+      "stationary": "int32", 
+      "walking": "int32", 
+      "running": "int32", 
+      "automotive": "int32", 
+      "cycling": "int32", 
+      "unknown": "int32", 
+      "label": "str"
+   },  
+   "plugin_studentlife_audio_android": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "datatype": "int32", 
+      "double_energy": "int64", 
+      "inference": "int32", 
+      "blob_feature": "object", 
+      "double_convo_start": "int64", 
+      "double_convo_end": "int64"
+   },  
+   "push_notification_device_tokens": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "token": "str"
+   },  
+   "screen": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "screen_status": "int32"
+   }, 
+   "wifi": 
+   {
+      "_id": "int32", 
+      "timestamp": "int64", 
+      "device_id": "str", 
+      "bssid": "str", 
+      "ssid": "str", 
+      "security": "str", 
+      "frequency": "int32", 
+      "rssi": "int32", 
+      "label": "str"
+   } 
+} 

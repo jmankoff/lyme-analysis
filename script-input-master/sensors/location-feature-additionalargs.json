@@ -1,0 +1,7 @@
+{
+	"home_location_file" : "/Users/yasaman/UWEXP/analysis-scripts/sensors/cmulibadaptation/resources/homelocations.json",
+	"on_site_periods" : [{"start": {"year": 2018, "month": 1, "day": 15, "hour": 0, "minute": 0, "second":0},
+	                     "end": {"year": 2018, "month": 3, "day": 5, "hour": 23, "minute": 59, "second":59}},
+	                    {"start": {"year": 2018, "month": 4, "day": 1, "hour": 0, "minute": 0, "second":0},
+	                     "end": {"year": 2018, "month": 5, "day": 30, "hour": 23, "minute": 59, "second":59}}]
+}

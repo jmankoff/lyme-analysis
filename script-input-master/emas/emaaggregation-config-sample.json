@@ -1,0 +1,31 @@
+{
+	"institution": "UW",
+	"phase": 1,
+	"surveys":[{"name": "weekly",
+	            "data_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaprep/weekly_prepped.csv",
+	            "column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-weeklyEMA.json"},
+	            {"name": "morning",
+	            "data_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaprep/morning_prepped.csv",
+	            "column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-morningEMA.json"},
+	            {"name": "midday1",
+	            "data_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaprep/midday1_prepped.csv",
+	            "column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-middayEMA.json"},
+	            {"name": "midday2",
+	            "data_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaprep/midday2_prepped.csv",
+	            "column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-middayEMA.json"},
+	            {"name": "evening",
+	            "data_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaprep/evening_prepped.csv",
+	            "column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-eveningEMA.json"}],
+	"additional_columns" : {
+		"tags" : ["institution", "phase","survey", "long", "late"],
+		"disc" : ["unfair", "discriminated"],
+		"substance" : ["any_drug", "any_substance"]
+	},
+	"id_range" : [1, 209],
+	"study_dates": {"start": {"year": 2018, "month": 1, "day": 1, "hour": 0, "minute": 0, "second":0},
+	                "end": {"year": 2018, "month": 6, "day": 30, "hour": 23, "minute": 59, "second":59}},
+	"h_aggregation_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaaggregation/aggregated-horizontal-numVal-internalID.csv",
+	"h_aggregation_column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-horizontalEMA.json",
+	"v_aggregation_file": "/Users/yasaman/UWEXP/analysis-scripts/surveys/results/emaaggregation/aggregated-vertical-numVal-internalID.csv",
+	"v_aggregation_column_grouping_file": "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-verticalEMA.json"
+}

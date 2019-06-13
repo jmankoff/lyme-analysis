@@ -1,0 +1,13 @@
+{
+ "ZENTITYBAROMETER": "barometer",
+ "ZENTITYBATTERY": "battery",
+ "ZENTITYBLUETOOTH": "bluetooth",
+ "ZENTITYCALL": "calls",
+ "ZENTITYFITBITDATA": "fitbit_data",
+ "ZENTITYLOCATION": "locations",
+ "null": "plugin_studentlife_audio_android",
+ "ZENTITYNETWORK ": "network",
+ "ZENTITYCONTACT": "plugin_contacts",
+ "ZENTITYSCREEN": "screen",
+ "ZENTITYWIFI": "wifi"
+}

@@ -1,0 +1,24 @@
+﻿AWARE,iOS,iOS file,Android,Andoid file
+applications_crashes,not supported,na,applications_crashes,applications.db
+applications_foreground,not supported,na,applications_foreground,applications.db
+applications_history,not supported,na,applications_history,applications.db
+applications_notifications,not supported,na,applications_notifications,applications.db
+barometer,ZENTITYBAROMETER,AWARE.sqlite,barometer,barometer.db
+battery,ZENTITYBATTERY,AWARE.sqlite,battery,battery.db
+battery_charges,ZENTITYBATTERYCHARGE,AWARE.sqlite,battery_charges,battery.db
+battery_discharges,ZENTITYBATTERYDISCHARGE,AWARE.sqlite,battery_discharges,battery.db
+bluetooth,ZENTITYBLUETOOTH,AWARE.sqlite,bluetooth,bluetooth.db
+calls,ZENTITYCALL,AWARE.sqlite,calls,communication.db
+fitbit_data,ZENTITYFITBITDATA,AWARE.sqlite,fitbit_data,plugin_fitbit.db
+locations,ZENTITYLOCATION,AWARE.sqlite,locations,locations.db
+locations_visit,ZENTITYLOCATIONVISIT,AWARE.sqlite,no supported,na
+messages,not supported,na,messages,communication.db
+network,ZENTITYNETWORK,AWARE.sqlite,network,network.db
+network_traffic,not supported,na,network_traffic,network_traffic.db
+plugin_contacts,ZENTITYCONTACT,AWARE.sqlite,plugin_contacts,plugin_contacts.db
+plugin_google_activity_recognition,na,na,plugin_google_activity_recognition,plugin_google_activity_recognition.db
+plugin_ios_activity_recognition,ZENTITYIOSACTIVITYRECOGNITION,AWARE.sqlite,na,na
+plugin_studentlife_audio_android,na,na,plugin_studentlife_audio_android,plugin_studentlife_audio_android.db
+push_notification_device_tokens,ZENTITYPUSHNOTIFICATION,AWARE.sqlite,not supported,na
+screen,ZENTITYSCREEN,AWARE.sqlite,screen,screen.db
+wifi,ZENTITYWIFI,AWARE.sqlite,wifi,wifi.db

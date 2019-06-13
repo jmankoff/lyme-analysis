@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Data Availability</title>
+    <script type="text/javascript" src="./d3.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        h1 {
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        /* svg {
+
+            border: 0.5em solid lightgray;
+        } */
+
+        svg .chart text {
+            font-family: sans-serif;
+            text-anchor: middle;
+            fill: black;
+        }
+
+
+
+        rect:hover {
+            stroke: salmon;
+            stroke-width: 3px;
+            transition: 200ms;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            overflow: scroll;
+            position: relative; 
+        }
+
+        .col1 {
+            height: 50%;
+            position: relative;
+            overflow-x:scroll;
+            float: left;
+        }
+        .dates {
+            width: 100%;
+            float: left;
+            min-height: 70px;
+        }
+
+        .col2 {
+            width: 100%;
+            float: left;
+            height: 30%;
+        }
+        
+        /* Set height of body and the document to 100% to enable "full page tabs" */
+        body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial;
+        }
+
+        /* Style tab links */
+        .tablink {
+        background-color: #555;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 2px 3px;
+        font-size: 12px;
+        width: 25%;
+        }
+
+        .tablink:hover {
+        background-color: #777;
+        }
+
+        /* Style the tab content (and add height:100% for full page content) */
+            .tabcontent {
+            padding: 10px; /*20px; */
+            height: 100%;
+            }
+        
+        .svg-container { 
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; 
+            vertical-align: middle; 
+            overflow: hidden; 
+        }
+    </style>
+    <link href="style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<div style="display: inline-block;">
+        <select id='tableSelect' onchange="openPage(this.value, false)"></select>
+        <input type="radio" name="general" onclick="changeMode(true)" checked> Global <br>
+        <input type="radio" name="general" onclick="changeMode(false)"> User <br>
+</div>
+<div class='container' style="text-align: left; height: 100%; width: 100%" class="tabcontent" id="content">
+    
+    <div class='col1'> 
+        <svg class="single" preserveAspectRatio="xMinYMin meet" style='height:100%'></svg>
+    </div>
+    <div class='dates'>
+            <svg class="datelabel" preserveAspectRatio="xMinYMin meet" style='height:100%'></svg>
+    </div>
+    <div class='col2'> 
+        <svg class="detail" preserveAspectRatio="xMinYMin meet" style='height:100%'></svg>
+    </div>
+</div> 
+
+
+<!-- <p id="title1">Public Reputation and Global Sales of Video Game Publishers From 1999 to 2015</p> -->
+
+<script type="text/javascript" src="./mysql_data_point_count/missing_log.js"></script>
+<script type="text/javascript">
+    let features;
+    let loading = new Promise(function(resolve, reject){
+        $.getJSON( "mysql_data_point_count/pid_brand.json", function( data ) {
+            $.each( data, function(userId, deviceType) {
+                if(deviceType == 'ios') {
+                    iOS_users.add(userId)
+                }else if (deviceType == 'android') {
+                    android_users.add(userId)
+                }
+            });
+            console.log("1 Done")
+            resolve("done")
+        });
+    })
+    $.getJSON("./mysql_data_point_count/config.json", function(json) {
+        features = json.features;
+        init(features)
+    });
+    $.getJSON("./mysql_data_point_count/dropout.json", function(json) {
+        dropout = json.dropout;
+        console.log(dropout)
+    });
+    let process = 0
+    
+    let dates = []
+
+    function changeMode(mode) {
+        general = mode
+        openPage(currentPageName, false)
+    }
+
+    function openPage(pageName, init) {
+        // Hide all elements with class="tabcontent" by default */
+        currentPageName = pageName
+        d3.selectAll(".path").remove()
+        d3.select(".single").selectAll(".id_tag").remove()
+        current = all_data[pageName]
+        generateColor = d3.scaleLinear().range(["gray", "red"]).domain([current.minValue, current.maxValue])
+        update(current.num_user, current.single_w, current.single_h, current.detail_h, current.maxValue, current.data, pageName, init)
+
+    }
+
+    /* global d3 */
+    // basic parameters
+    let general = true;       // the mode of the heatmap
+    let single_grid_length = 15
+    let padding = 30;
+    let single_w = 0
+    let single_h = 0
+    let detail_h = 0
+    let num_user = 0
+    let all_data = {}
+    let key = function (d) {
+        return d.key;
+    };
+    let single_canvas
+    let detail_canvas
+    let mixed_users = new Set()
+    let iOS_users = new Set()
+    let android_users = new Set()
+    let androidDevices = new Set()
+    let iOSDevices = new Set()
+    let androidOnly = new Set(['applications_crashes','applications_foreground','applications_history','applications_notifications','installations','network_traffic','plugin_google_activity_recognition','touch'])
+    let iosOnly = new Set(['plugin_ios_activity_recognition'])
+    let select_box_coor = [{x1:120,y1:24,x2:1728,y2:24}, {x1:120,y1:24,x2:120,y2:32}, {x1:120,y1:32,x2:1728,y2:32}, {x1:1728,y1:24,x2:1728,y2:32}]
+    let generateColor;
+    let currentPageName;
+    let dropout = new Set();
+
+    function init(features) {
+        let x = document.getElementById('tableSelect')
+
+        for (let i = 0; i < features.length; i++) {
+            tableName = features[i]
+            let option = document.createElement("option")
+            option.value = tableName
+            option.text = tableName
+            x.add(option)
+            loadData(tableName)
+        }
+            
+
+        setTimeout(function() {
+            single_canvas = d3.select(".single")
+                .style("width", single_w)
+                .style("height", single_h);
+            detail_canvas = d3. select(".detail")
+                .style('width', single_w)
+                .style('height', detail_h)
+            date_canvas = d3. select(".datelabel")
+                .style('width', single_w)
+                .style('height', '80px')
+            current = all_data[features[0]]
+            currentPageName = features[0]
+            for(let i = 0; i < dates.length; i++) {
+                d3.select(".datelabel").append("text")
+                        .attr('x',2 * padding + 4 + i * single_grid_length)
+                        .attr('y',0)
+                        .attr("writing-mode", "vertical-rl")
+                        .attr('font-size', '12px')
+                        .text(dates[i].date)
+                        .attr("font-weight", "bold")
+            }
+            let initY = d3.scaleLinear().domain([0,0]).range([detail_h - padding, 0]);
+            let initYAxis = d3.axisLeft().scale(initY).ticks(10)
+            detail_canvas.append('g').attr("id", "yaxis")
+                            .attr("transform", "translate(" + 2*padding + ",0)")
+                            .call(initYAxis)
+            let x = d3.scaleLinear().range([2*padding, single_w])
+            let xAxis = d3.axisBottom().scale(x).ticks(0)
+            let xAxisGroup = detail_canvas.append('g').attr("id", "xaxis")
+                                .attr("transform", "translate(" + 0 + "," + (detail_h-padding) + ")")
+                                .call(xAxis)
+            
+            openPage(features[0], true)
+        }, 3000)
+    }
+    function loadData(tableName) {
+        let userids = []
+        d3.tsv("./mysql_data_point_count/" + tableName + ".txt", function(row) {
+            rowDate = row.date;
+            //console.log(row)
+            delete row.date;
+            return {
+                date: rowDate,
+                user_data: row
+            }
+        }).then(rows => {
+            dates = []
+            let current_dataset = [];
+            let user_max = new Map();
+            let user_min = new Map();
+            let maxValue = -1024
+            let minValue = 999999
+            num_user = 0
+            let flag = true
+            let single_xCoor = 2 * padding
+            for (let i = 0; i < rows.length; i++){
+                let single_yCoor = 0
+                let row = rows[i]
+                let users = row.user_data
+                num_user = Object.keys(users).length
+                dates.push({date: row.date, order: i})
+
+                user_ids = Object.keys(users).sort()
+
+                for (let index = 0; index < user_ids.length; index++){
+                    user = user_ids[index]
+                    let info = {date: row.date, user_id: user, value: 0, xCoor:single_xCoor, yCoor: single_yCoor, key: row.date+user}
+                    if(users[user].length > 0) {
+                        info.value = Number(users[user])
+                        if(user_max.has(user)) {
+                            if (info.value > user_max.get(user)) {
+                                user_max.set(user, info.value)
+                            }
+                            if(info.value < user_min.get(user)) {
+                                user_min.set(user, info.value);
+                            }
+                        } else {
+                            user_min.set(user, info.value);
+                            user_max.set(user, info.value);
+                        }
+                    }else{
+                        info.value = -1024
+                    }
+                    if (info.value > maxValue) {
+                        maxValue = info.value
+                    }
+                    if (info.value > 0 && info.value < minValue) {
+                        minValue = info.value
+                    }
+                    current_dataset.push(info)
+                    single_yCoor += single_grid_length
+                }
+                T = false
+                single_xCoor += single_grid_length
+                flag = false
+            }
+            single_h = num_user * (single_grid_length)
+            single_w = dates.length * single_grid_length + 2 * padding
+            // let detail_h = maxValue / 3 + padding
+            detail_h = 310 + padding
+            all_data[tableName] = {data: current_dataset, single_w: single_w, single_h: single_h, detail_h: detail_h, 
+                                    maxValue: maxValue, minValue: minValue, num_user: num_user, user_max: user_max, user_min: user_min};
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    function update(num_user, single_w, single_h, detail_h, maxValue, single_table_dataset, tableName, init) {
+        for(let i = 0; i < num_user; i++) {
+                d = single_table_dataset[i]
+                //console.log(d)
+                if (init) {
+                    if(android_users.has(d.user_id.toString(10))) {
+                        d3.select(".single").append('image')
+                        .attr('xlink:href', 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg')
+                        .attr('width', 12)
+                        .attr('height', 12)
+                        .attr('x', d.xCoor-40)
+                        .attr('y', d.yCoor)
+                    } else if (d.user_id.toString(10)) {
+                        d3.select(".single").append('image')
+                        .attr('xlink:href', 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg')
+                        .attr('width', 12)
+                        .attr('height', 12)
+                        .attr('x', d.xCoor-40)
+                        .attr('y', d.yCoor)         
+                    }
+                }
+                
+                d3.select(".single").append("text")
+                .attr('class', 'id_tag')
+                .attr("x", d.xCoor - 25)
+                .attr('y', d.yCoor + 10)
+                .attr('font-size', '12px')
+                .attr("font-weight", "bold")
+                .attr('fill', function() {
+                    if (tableName == "locations"){
+                        if ("locations_false_positive" in missing_log){
+                            if (missing_log["locations_false_positive"].indexOf(d.user_id) > -1){
+                                return 'blue'
+                            }
+                        }
+                    }
+                    if (!(tableName in missing_log)){
+                        return 'black'
+                    } else {
+                        if (missing_log[tableName].indexOf(d.user_id) > -1){
+                            return 'red'
+                        } else {
+                            return 'black'
+                        }
+                    }
+                })
+                .text(d.user_id)
+            }
+        let all_rects = d3.select(".single").selectAll("rect").data(single_table_dataset, key);
+        let rect_enter = all_rects.enter().append("rect")
+                            .attr('x', function(d) {
+                                return d.xCoor
+                            })
+                            .attr('y', function(d) {
+                                return d.yCoor
+                            })
+                            .attr('height', single_grid_length)
+                            .attr('width', single_grid_length)
+                            .attr('fill', function(d) {
+                                if (androidOnly.has(tableName) && iOS_users.has(d.user_id)) {
+                                    return 'white'
+                                } else if (iosOnly.has(tableName) && android_users.has(d.user_id)) {
+                                    return 'white'
+                                } else{
+                                    if(general) {
+                                        return d.value > 0 ? generateColor(d.value) : '#fffdd0'
+                                    } else {
+                                        if (d.value > 0) {
+                                            let M = all_data[tableName].user_max.get(d.user_id)
+                                            let m = all_data[tableName].user_min.get(d.user_id)
+                                            let gen =  d3.scaleLinear().range(["gray", "red"]).domain([m, M]);
+                                            return gen(d.value);
+                                        }else {
+                                            return '#fffdd0'
+                                        }
+                                    }
+                                }
+                            })
+                            .on('click', function(d) {
+                                let user_max = 0
+                                single_user_data = []
+                                for(let i = 0; i < single_table_dataset.length; i++) {
+                                    dataPoint = single_table_dataset[i]
+                                    if(dataPoint.value > user_max) {
+                                        user_max = dataPoint.value
+                                    }
+                                    if(dataPoint.user_id == d.user_id) {
+                                        single_user_data.push({user_id: d.user_id,
+                                                                date: dataPoint.date,
+                                                                value: dataPoint.value,
+                                                                xCoor: dataPoint.xCoor,
+                                                                key: d.user_id + dataPoint.date})
+                                    }
+                                }
+                                detail_update(single_user_data, num_user, single_w, single_h, detail_h, user_max, tableName)
+                            })
+                            .attr('stroke', 'white')
+                            .attr('stroke-width','0.5px')
+
+        rect_enter.append("svg:title")
+            .text(function (d) {
+                return "ID: " + d.user_id + "\n" +
+                        "Date: " + d.date + "\n" + 
+                        "Value: " + (d.value < 0 ? "No Data" : d.value);
+        });
+
+        rect_enter.merge(all_rects)
+                            .attr('fill', function(d) {
+                                if (androidOnly.has(tableName) && iOS_users.has(d.user_id)) {
+                                    return 'white';
+                                } else if (iosOnly.has(tableName) && android_users.has(d.user_id)) {
+                                    return 'white';
+                                } else{
+                                    if(general) {
+                                        return d.value > 0 ? generateColor(d.value) : '#fffdd0'
+                                    } else {
+                                        if (d.value > 0) {
+                                            let M = all_data[tableName].user_max.get(d.user_id)
+                                            let m = all_data[tableName].user_min.get(d.user_id)
+                                            let gen =  d3.scaleLinear().range(["gray", "red"]).domain([m, M]);
+                                            return gen(d.value);
+                                        }else {
+                                            return '#fffdd0'
+                                        }
+                                    }
+                                }
+                            })
+                            .on('click', function(d) {
+                                let user_max = 0
+                                single_user_data = []
+                                let y1 = 0
+                                for(let i = 0; i < single_table_dataset.length; i++) {
+                                    dataPoint = single_table_dataset[i]
+                                    if(dataPoint.user_id == d.user_id) {
+                                        single_user_data.push({user_id: d.user_id,
+                                                                date: dataPoint.date,
+                                                                value: dataPoint.value,
+                                                                xCoor: dataPoint.xCoor,
+                                                                key: d.user_id + dataPoint.date})
+                                        y1 = dataPoint.yCoor
+                                        if(dataPoint.value > user_max) {
+                                            user_max = dataPoint.value
+                                        }
+                                    }
+                                }
+                                detail_update(single_user_data, num_user, single_w, single_h, detail_h, user_max, tableName)
+                                highlight_update(y1)
+                            })
+                            .attr('stroke', 'white')
+                            .attr('stroke-width','0.5px')
+                            .select("title")
+                            .text(function(d) { 
+                                return "ID: " + d.user_id + "\n" +
+                                        "Date: " + d.date + "\n" + 
+                                        "Value: " + (d.value < 0 ? "No Data" : d.value); 
+                            })
+                            .transition().duration(300);
+
+    
+
+    }
+
+    function detail_update(data,num_user, single_w, single_h, detail_h, maxValue, tableName) {
+        let y = d3.scaleLinear().domain([0,maxValue]).range([detail_h - padding, 0]);
+        let yAxis = d3.axisLeft().scale(y).ticks(10)
+        let yTicks = d3.selectAll("#yaxis")
+        let updatedTicks = yTicks.enter()
+        updatedTicks.merge(yTicks).transition().duration(300)
+                .call(yAxis).attr("font-size", "15px");
+        // let xAxis = d3.axisBottom().scale(x).ticks(0)
+        // let xAxisGroup = detail_canvas.append('g').attr("id", "xaxis")
+        //                     .attr("transform", "translate(" + 0 + "," + (detail_h-padding) + ")")
+        //                     .call(xAxis)
+        let detail_rects = d3.select(".detail").selectAll("rect").data(data);
+        let rect_enter = detail_rects.enter().append("rect")
+                            .attr('x', function(d) {
+                                //console.log(d)
+                                return d.xCoor
+                            })
+                            .attr('y', function(d) {
+                                
+                                if(d.value > 0) {
+                                    // console.log(single_h - padding - d.value / 10)
+                                    return detail_h - padding - d.value / maxValue * 300
+                                }else{
+                                    // console.log(0)
+                                    return 0
+                                }
+                            })
+                            .attr('height', function(d) {
+                                return d.value > 0 ? d.value / maxValue * 300 : 0
+                            })
+                            .attr('width', single_grid_length)
+                            .attr('fill', 'blue')
+                            .attr('stroke', 'black')
+                            .attr('stroke-width','1px')
+                            .attr('fill-opacity', '0.9')
+        rect_enter.append("svg:title")
+            .attr('class', 'detail_label')
+            .text(function (d) {
+                return "ID: " + d.user_id + "\n" +
+                        "Date: " + d.date + "\n" + 
+                        "Value: " + (d.value < 0 ? "No Data" : d.value);
+        });
+
+        
+        rect_enter.merge(detail_rects).transition().duration(300)
+            .attr('x', function(d) {
+                //console.log(d)
+                return d.xCoor
+            })
+            .attr('y', function(d) {
+                
+                if(d.value > 0) {
+                    // console.log(single_h - padding - d.value / 10)
+                    return detail_h - padding - d.value / maxValue * 300
+                }else{
+                    // console.log(0)
+                    return 0
+                }
+            })
+            .attr('height', function(d) {
+                return d.value > 0 ? d.value / maxValue * 300 : 0
+            })
+            .attr('width', single_grid_length)
+            .attr('fill', 'blue')
+            .attr('stroke', 'black')
+            .attr('stroke-width','1px')
+            .attr('fill-opacity', '0.9')
+            .select(".detail_label").text(function (d) {
+                return "ID: " + d.user_id + "\n" +
+                        "Date: " + d.date + "\n" + 
+                        "Value: " + (d.value < 0 ? "No Data" : d.value)});
+
+        detail_rects.exit().transition().duration(300)
+            .attr("width", 0)
+            .attr("height", 0)
+            .remove();
+    }
+
+    function highlight_update(y1){
+        d3.selectAll(".path").remove()
+        let x1 = 2 * padding
+        x2 = x1 + dates.length * single_grid_length
+        y2 = y1 + single_grid_length
+        let lines = d3.select('.single')
+                    lines.append("path")
+                    .attr("class", "path")
+                    .attr("d", " M " + x1 + " " + y1 +"\n"
+                                    + " L " + x2 + " " + y1 +"\n"
+                                    + " L " + x2 + " " + y2 +"\n"
+                                    + " L " + x1 + " " + y2 +"\n"
+                                    + "Z")
+                    .attr("fill", "none")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2)
+                    .transition().duration(200)
+
+    }
+
+
+</script>
+</body>
+
+</html>

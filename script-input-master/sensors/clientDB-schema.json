@@ -1,0 +1,1002 @@
+{
+   "ios":
+   {
+      "ZENTITYACCELEROMETER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZDOUBLE_VALUES_1": "FLOAT",
+         "ZDOUBLE_VALUES_2": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYACTIVITYRECOGNITION": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZCONFIDENCE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZACTIVITIES": "VARCHAR",
+         "ZACTIVITY_NAME": "VARCHAR",
+         "ZACTIVITY_TYPE": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYAMBIENTNOISE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZIS_SILENT": "INTEGER",
+         "ZDOUBLE_DECIBELS": "FLOAT",
+         "ZDOUBLE_FREQUENCY": "FLOAT",
+         "ZDOUBLE_RMS": "FLOAT",
+         "ZDOUBLE_SILENT_THRESHOLD": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZRAW": "VARCHAR" 
+      }, 
+      "ZENTITYBAROMETER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYBATTERY": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZBATTERY_ADAPTOR": "INTEGER",
+         "ZBATTERY_HEALTH": "INTEGER",
+         "ZBATTERY_LEVEL": "INTEGER",
+         "ZBATTERY_SCALE": "INTEGER",
+         "ZBATTERY_STATUS": "INTEGER",
+         "ZBATTERY_TEMPERATURE": "INTEGER",
+         "ZBATTERY_VOLTAGE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZBATTERY_TECHNOLOGY": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYBATTERYCHARGE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZBATTERY_END": "INTEGER",
+         "ZBATTERY_START": "INTEGER",
+         "ZDOUBLE_END_TIMESTAMP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYBATTERYDISCHARGE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZBATTERY_END": "INTEGER",
+         "ZBATTERY_START": "INTEGER",
+         "ZDOUBLE_END_TIMESTAMP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYBCCALENDAR": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZACCOUNT_NAME": "VARCHAR",
+         "ZALL_DAY": "VARCHAR",
+         "ZAVAILABILITY": "VARCHAR",
+         "ZBEGIN": "VARCHAR",
+         "ZCALENDAR_COLOR": "VARCHAR",
+         "ZCALENDAR_DESCRIPTION": "VARCHAR",
+         "ZCALENDAR_ID": "VARCHAR",
+         "ZCALENDAR_NAME": "VARCHAR",
+         "ZCOLOR": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZEND": "VARCHAR",
+         "ZEVENT_ID": "VARCHAR",
+         "ZEVENT_TIMEZONE": "VARCHAR",
+         "ZHAS_ALARM": "VARCHAR",
+         "ZIS_ORGANIZER": "VARCHAR",
+         "ZLOCATION": "VARCHAR",
+         "ZOWNER_ACCOUNT": "VARCHAR",
+         "ZRRULE": "VARCHAR",
+         "ZSEEN": "VARCHAR",
+         "ZSTATUS": "VARCHAR",
+         "ZTITLE": "VARCHAR" 
+      }, 
+      "ZENTITYBLEHEARTRATE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZHEARTRATE": "INTEGER",
+         "ZLOCATION": "INTEGER",
+         "ZRSSI": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZMANUFACTURER": "VARCHAR" 
+      }, 
+      "ZENTITYBLUETOOTH": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZBT_RSSI": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZBT_ADDRESS": "VARCHAR",
+         "ZBT_NAME": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYCALL": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZCALL_DURATION": "INTEGER",
+         "ZCALL_TYPE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZTRACE": "VARCHAR" 
+      }, 
+      "ZENTITYCONTACT": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZSYNC_DATE": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZEMAILS": "VARCHAR",
+         "ZGROUPS": "VARCHAR",
+         "ZNAME": "VARCHAR",
+         "ZPHONE_NUMBERS": "VARCHAR" 
+      }, 
+      "ZENTITYDEBUG": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZBATTERY": "INTEGER",
+         "ZBATTERY_STATE": "INTEGER",
+         "ZTYPE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZAPP_VERSION": "VARCHAR",
+         "ZDEVICE": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZEVENT": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZNETWORK": "VARCHAR",
+         "ZOS": "VARCHAR" 
+      }, 
+      "ZENTITYDEVICEUSAGE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZELAPSED_DEVICE_OFF": "FLOAT",
+         "ZELAPSED_DEVICE_ON": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYESMANSWER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZESM_EXPIRATION_THRESHOLD": "INTEGER",
+         "ZESM_STATUS": "INTEGER",
+         "ZDOUBLE_ESM_USER_ANSWER_TIMESTAMP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESM_JSON": "VARCHAR",
+         "ZESM_TRIGGER": "VARCHAR",
+         "ZESM_USER_ANSWER": "VARCHAR" 
+      }, 
+      "ZENTITYESMANSWERBC": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZESM_EXPIRATION_THRESHOLD": "INTEGER",
+         "ZESM_LIKERT_MAX": "INTEGER",
+         "ZESM_SCALE_MAX": "INTEGER",
+         "ZESM_SCALE_MIN": "INTEGER",
+         "ZESM_SCALE_START": "INTEGER",
+         "ZESM_STATUS": "INTEGER",
+         "ZESM_TYPE": "INTEGER",
+         "ZDOUBLE_ESM_USER_ANSWER_TIMESTAMP": "FLOAT",
+         "ZESM_LIKERT_STEP": "FLOAT",
+         "ZESM_SCALE_STEP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESM_CHECKBOXES": "VARCHAR",
+         "ZESM_INSTRUCTIONS": "VARCHAR",
+         "ZESM_LIKERT_MAX_LABEL": "VARCHAR",
+         "ZESM_LIKERT_MIN_LABEL": "VARCHAR",
+         "ZESM_QUICK_ANSWERS": "VARCHAR",
+         "ZESM_RADIOS": "VARCHAR",
+         "ZESM_SCALE_MAX_LABEL": "VARCHAR",
+         "ZESM_SCALE_MIN_LABEL": "VARCHAR",
+         "ZESM_SUBMIT": "VARCHAR",
+         "ZESM_TITLE": "VARCHAR",
+         "ZESM_TRIGGER": "VARCHAR",
+         "ZESM_USER_ANSWER": "VARCHAR" 
+      }, 
+      "ZENTITYESMHISTORY": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZEXPIRATION_THRESHOLD": "INTEGER",
+         "ZRANDOMIZE": "INTEGER",
+         "ZFIRE_DATE": "FLOAT",
+         "ZORIGINAL_FIRE_DATE": "FLOAT",
+         "ZSCHEDULE_ID": "VARCHAR",
+         "ZTRIGGER": "VARCHAR" 
+      }, 
+      "ZENTITYESMSCHEDULE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZEXPIRATION_THRESHOLD": "INTEGER",
+         "ZFIRE_HOUR": "INTEGER",
+         "ZINTERFACE": "INTEGER",
+         "ZRANDOMIZE_ESM": "INTEGER",
+         "ZRANDOMIZE_SCHEDULE": "INTEGER",
+         "ZTEMPORARY": "INTEGER",
+         "ZESM_EXPIRATION_THRESHOLD": "INTEGER",
+         "ZESM_LIKERT_MAX": "INTEGER",
+         "ZESM_MINUTE_STEP": "INTEGER",
+         "ZESM_NA": "INTEGER",
+         "ZESM_NUMBER": "INTEGER",
+         "ZESM_SCALE_MAX": "INTEGER",
+         "ZESM_SCALE_MIN": "INTEGER",
+         "ZESM_SCALE_START": "INTEGER",
+         "ZESM_STATUS": "INTEGER",
+         "ZESM_TYPE": "INTEGER",
+         "ZESM_SCHEDULE": "INTEGER",
+         "Z18_ESM_SCHEDULE": "INTEGER",
+         "ZEND_DATE": "TIMESTAMP",
+         "ZSTART_DATE": "TIMESTAMP",
+         "ZDOUBLE_ESM_USER_ANSWER_TIMESTAMP": "FLOAT",
+         "ZESM_LIKERT_STEP": "FLOAT",
+         "ZESM_SCALE_STEP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZCONTEXT": "VARCHAR",
+         "ZNOITIFICATION_BODY": "VARCHAR",
+         "ZNOTIFICATION_TITLE": "VARCHAR",
+         "ZSCHEDULE_ID": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESM_APP_INTEGRATION": "VARCHAR",
+         "ZESM_CHECKBOXES": "VARCHAR",
+         "ZESM_FLOWS": "VARCHAR",
+         "ZESM_INSTRUCTIONS": "VARCHAR",
+         "ZESM_JSON": "VARCHAR",
+         "ZESM_LIKERT_MAX_LABEL": "VARCHAR",
+         "ZESM_LIKERT_MIN_LABEL": "VARCHAR",
+         "ZESM_QUICK_ANSWERS": "VARCHAR",
+         "ZESM_RADIOS": "VARCHAR",
+         "ZESM_SCALE_MAX_LABEL": "VARCHAR",
+         "ZESM_SCALE_MIN_LABEL": "VARCHAR",
+         "ZESM_START_DATE": "VARCHAR",
+         "ZESM_START_TIME": "VARCHAR",
+         "ZESM_SUBMIT": "VARCHAR",
+         "ZESM_TIME_FORMAT": "VARCHAR",
+         "ZESM_TITLE": "VARCHAR",
+         "ZESM_TRIGGER": "VARCHAR",
+         "ZESM_URL": "VARCHAR",
+         "ZESM_USER_ANSWER": "VARCHAR" 
+      }, 
+      "ZENTITYESTIMOTEAIRPRESSURE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZPRESSURE": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESTIMOTE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYESTIMOTEAMBIENTLIGHT": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZAMBIENT_LIGHT": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESTIMOTE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYESTIMOTEMOTION": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZCURRENT_MOTION_STATE_DURATION_IN_SECONDS": "INTEGER",
+         "ZPREVIOUS_MOTION_STATE_DURATION_IN_SECONDS": "INTEGER",
+         "ZACCELERATION_X": "FLOAT",
+         "ZACCELERATION_Y": "FLOAT",
+         "ZACCELERATION_Z": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESTIMOTE_ID": "VARCHAR",
+         "ZMOTION_STATE": "VARCHAR" 
+      }, 
+      "ZENTITYESTIMOTETEMPERATURE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTEMPERATURE": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZESTIMOTE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYFITBITDATA": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZFITBIT_DATA": "VARCHAR",
+         "ZFITBIT_DATA_TYPE": "VARCHAR",
+         "ZFITBIT_ID": "VARCHAR" 
+      }, 
+      "ZENTITYFITBITDEVICE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZFITBIT_BATTERY": "VARCHAR",
+         "ZFITBIT_ID": "VARCHAR",
+         "ZFITBIT_LAST_SYNC": "VARCHAR",
+         "ZFITBIT_MAC": "VARCHAR",
+         "ZFITBIT_VERSION": "VARCHAR" 
+      }, 
+      "ZENTITYGRAVITY": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZDOUBLE_VALUES_1": "FLOAT",
+         "ZDOUBLE_VALUES_2": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYGYROSCOPE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZDOUBLE_VALUES_1": "FLOAT",
+         "ZDOUBLE_VALUES_2": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYIBEACON": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZMAJOR": "INTEGER",
+         "ZMINRO": "INTEGER",
+         "ZRSSI": "INTEGER",
+         "ZACCURACY": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZIDENTIFIER": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZPROXIMITY": "VARCHAR",
+         "ZUUID": "VARCHAR" 
+      }, 
+      "ZENTITYIOSACTIVITYRECOGNITION": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZAUTOMOTIVE": "INTEGER",
+         "ZCONFIDENCE": "INTEGER",
+         "ZCYCLING": "INTEGER",
+         "ZRUNNING": "INTEGER",
+         "ZSTATIONARY": "INTEGER",
+         "ZUNKNOWN": "INTEGER",
+         "ZWALKING": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZACTIVITIES": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYLABEL": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZANSWERED_TIMESTAMP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZKEY": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZNOTIFICATION_BODY": "VARCHAR",
+         "ZTYPE": "VARCHAR" 
+      }, 
+      "ZENTITYLINEARACCELEROMETER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZDOUBLE_VALUES_1": "FLOAT",
+         "ZDOUBLE_VALUES_2": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYLOCATION": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_ALTITUDE": "FLOAT",
+         "ZDOUBLE_BEARING": "FLOAT",
+         "ZDOUBLE_LATITUDE": "FLOAT",
+         "ZDOUBLE_LONGITUDE": "FLOAT",
+         "ZDOUBLE_SPEED": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZPROVIDER": "VARCHAR" 
+      }, 
+      "ZENTITYLOCATIONVISIT": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_ARRIVAL": "FLOAT",
+         "ZDOUBLE_DEPARTURE": "FLOAT",
+         "ZDOUBLE_LATITUDE": "FLOAT",
+         "ZDOUBLE_LONGITUDE": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZADDRESS": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZNAME": "VARCHAR",
+         "ZPROVIDER": "VARCHAR" 
+      }, 
+      "ZENTITYMAGNETOMETER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZDOUBLE_VALUES_1": "FLOAT",
+         "ZDOUBLE_VALUES_2": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYMEMORY": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZMEM_FREE": "FLOAT",
+         "ZMEM_TOTAL": "FLOAT",
+         "ZMEM_USED": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDBATTERYGAUGE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZBATTERY_GAUGE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDCALORIE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZCALORIES": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDDEVICECONTACT": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZDEVICECONTACT": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDDISTANCE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZDISTANCE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZMOTIONTYPE": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDGSR": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZGSR": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDHR": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZHEARTRATE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZHEARTRATE_QUALITY": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDPEDOMETER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZPEDOMETER": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDRRINTERVAL": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZRRINTERVAL": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDSKINTEMP": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZSKINTEMP": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYMSBANDUV": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZUV": "VARCHAR" 
+      }, 
+      "ZENTITYNETWORK": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZNETWORK_STATE": "INTEGER",
+         "ZNETWORK_TYPE": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZNETWORK_SUBTYPE": "VARCHAR" 
+      }, 
+      "ZENTITYNTPTIME": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZDRIFT": "FLOAT",
+         "ZNTP_TIME": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYOPENWEATHER": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZWEATHER_ICON_ID": "INTEGER",
+         "ZCLOUDINESS": "FLOAT",
+         "ZHUMIDITY": "FLOAT",
+         "ZPRESSURE": "FLOAT",
+         "ZRAIN": "FLOAT",
+         "ZSNOW": "FLOAT",
+         "ZSUNRISE": "FLOAT",
+         "ZSUNSET": "FLOAT",
+         "ZTEMPERATURE": "FLOAT",
+         "ZTEMPERATURE_MAX": "FLOAT",
+         "ZTEMPERATURE_MIN": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZWIND_DEGREES": "FLOAT",
+         "ZWIND_SPEED": "FLOAT",
+         "ZCITY": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZUNIT": "VARCHAR",
+         "ZWEATHER_DESCRIPTION": "VARCHAR" 
+      }, 
+      "ZENTITYPROCESSOR": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZDOUBLE_IDLE_LOAD": "FLOAT",
+         "ZDOUBLE_LAST_IDLE": "FLOAT",
+         "ZDOUBLE_LAST_SYSTEM": "FLOAT",
+         "ZDOUBLE_LAST_USER": "FLOAT",
+         "ZDOUBLE_SYSTEM_LOAD": "FLOAT",
+         "ZDOUBLE_USER_LOAD": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYPROXIMITY": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_PROXIMITY": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYPUSHNOTIFICATION": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZTOKEN": "VARCHAR" 
+      }, 
+      "ZENTITYROTATION": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZACCURACY": "INTEGER",
+         "ZDOUBLE_VALUES_0": "FLOAT",
+         "ZDOUBLE_VALUES_1": "FLOAT",
+         "ZDOUBLE_VALUES_2": "FLOAT",
+         "ZDOUBLE_VALUES_3": "FLOAT",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR" 
+      }, 
+      "ZENTITYSCREEN": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZSCREEN_STATUS": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR" 
+      }, 
+      "ZENTITYTIMEZONE": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZTIMEZONE": "VARCHAR" 
+      }, 
+      "ZENTITYWIFI": 
+      {
+         "Z_PK": "INTEGER",
+         "Z_ENT": "INTEGER",
+         "Z_OPT": "INTEGER",
+         "ZFREQUENCY": "INTEGER",
+         "ZRSSI": "INTEGER",
+         "ZTIMESTAMP": "FLOAT",
+         "ZBSSID": "VARCHAR",
+         "ZDEVICE_ID": "VARCHAR",
+         "ZLABEL": "VARCHAR",
+         "ZSECURITY": "VARCHAR",
+         "ZSSID": "VARCHAR" 
+      }
+   }, 
+   "android":
+   {
+      "applications_foreground": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "package_name": "text", 
+         "application_name": "text", 
+         "is_system_app": "integer"
+      }, 
+      "applications_history": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "package_name": "text", 
+         "application_name": "text", 
+         "process_importance": "integer", 
+         "process_id": "integer", 
+         "double_end_timestamp": "real", 
+         "is_system_app": "integer"
+      }, 
+      "applications_notifications": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "package_name": "text", 
+         "application_name": "text", 
+         "text": "text", 
+         "sound": "text", 
+         "vibrate": "text", 
+         "defaults": "integer", 
+         "flags": "integer"
+      }, 
+      "applications_crashes": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "package_name": "text", 
+         "application_name": "text", 
+         "application_version": "real", 
+         "error_short": "text", 
+         "error_long": "text", 
+         "error_condition": "integer", 
+         "is_system_app": "integer"
+      }, 
+      "sensor_barometer": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "double_sensor_maximum_range": "real", 
+         "double_sensor_minimum_delay": "real", 
+         "sensor_name": "text", 
+         "double_sensor_power_ma": "real", 
+         "double_sensor_resolution": "real", 
+         "sensor_type": "text", 
+         "sensor_vendor": "text", 
+         "sensor_version": "text"
+      }, 
+      "barometer": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "double_values_0": "real", 
+         "accuracy": "integer", 
+         "label": "text"
+      }, 
+      "battery": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "battery_status": "integer", 
+         "battery_level": "integer", 
+         "battery_scale": "integer", 
+         "battery_voltage": "integer", 
+         "battery_temperature": "integer", 
+         "battery_adaptor": "integer", 
+         "battery_health": "integer", 
+         "battery_technology": "text"
+      }, 
+      "battery_discharges": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "battery_start": "integer", 
+         "battery_end": "integer", 
+         "double_end_timestamp": "real"
+      }, 
+      "battery_charges": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "battery_start": "integer", 
+         "battery_end": "integer", 
+         "double_end_timestamp": "real"
+      }, 
+      "sensor_bluetooth": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "bt_address": "text", 
+         "bt_name": "text"
+      }, 
+      "bluetooth": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "bt_address": "text", 
+         "bt_name": "text", 
+         "bt_rssi": "integer", 
+         "label": "text"
+      }, 
+      "calls": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "call_type": "integer", 
+         "call_duration": "integer", 
+         "trace": "text"
+      }, 
+      "messages": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "message_type": "integer", 
+         "trace": "text"
+      }, 
+      "locations": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "double_latitude": "real", 
+         "double_longitude": "real", 
+         "double_bearing": "real", 
+         "double_speed": "real", 
+         "double_altitude": "real", 
+         "provider": "text", 
+         "accuracy": "real", 
+         "label": "text"
+      }, 
+      "network": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "network_type": "integer", 
+         "network_subtype": "text", 
+         "network_state": "integer"
+      }, 
+      "network_traffic": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "network_type": "integer", 
+         "double_received_bytes": "real", 
+         "double_sent_bytes": "real", 
+         "double_received_packets": "real", 
+         "double_sent_packets": "real"
+      }, 
+      "plugin_contacts": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "name": "text", 
+         "phone_numbers": "text", 
+         "emails": "text", 
+         "groups": "text", 
+         "sync_date": "real"
+      }, 
+      "fitbit_data": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "fitbit_id": "text", 
+         "fitbit_data_type": "text", 
+         "fitbit_data": "text"
+      }, 
+      "fitbit_devices": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "fitbit_id": "text", 
+         "fitbit_version": "text", 
+         "fitbit_battery": "text", 
+         "fitbit_mac": "text", 
+         "fitbit_last_sync": "text"
+      }, 
+      "plugin_google_activity_recognition": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "activity_name": "text", 
+         "activity_type": "integer", 
+         "confidence": "integer", 
+         "activities": "text"
+      }, 
+      "plugin_studentlife_audio_android": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "datatype": "integer", 
+         "double_energy": "real", 
+         "inference": "integer", 
+         "blob_feature": "blob", 
+         "double_convo_start": "real", 
+         "double_convo_end": "real"
+      }, 
+      "screen": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "screen_status": "integer"
+      }, 
+      "touch": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "touch_app": "text", 
+         "touch_action": "text", 
+         "touch_action_text": "text", 
+         "scroll_items": "integer", 
+         "scroll_from_index": "integer", 
+         "scroll_to_index": "integer"
+      }, 
+      "wifi": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "bssid": "text", 
+         "ssid": "text", 
+         "security": "text", 
+         "frequency": "integer", 
+         "rssi": "integer", 
+         "label": "text"
+      }, 
+      "sensor_wifi": 
+      {
+         "_id": "integer", 
+         "timestamp": "real", 
+         "device_id": "text", 
+         "mac_address": "text", 
+         "ssid": "text", 
+         "bssid": "text"
+      }
+   }
+}

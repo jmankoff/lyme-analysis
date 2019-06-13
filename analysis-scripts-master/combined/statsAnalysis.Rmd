@@ -1,0 +1,1042 @@
+---
+title: "UWEXP_discrimination"
+author: "Kevin Kuehn"
+date: "February 11, 2019"
+output: html_document
+---
+
+```{r}
+UWEXP<-read.csv("~/Downloads/giant_table_sensor_sleep_EMA_baseline (1).csv")
+UWEXP.2<-read.csv("~/Downloads/bigtable_UWonly.csv")
+
+##Descriptives 
+
+EMA_s<-c("date", "PID", "discriminated", "feel_anxious_weekly", "feel_depressed_weekly",
+"feel_frustrated_weekly", "feel_overwhelmed_weekly", "feel_connected_weekly","feel_happy_weekly", "feel_lonely_weekly", "feel_anxious_morning",
+"feel_anxious_midday1", "feel_anxious_midday2", "feel_anxious_evening",
+"feel_depressed_morning", "feel_depressed_midday1", "feel_depressed_midday2","feel_depressed_evening", "feel_frustrated_morning", "feel_frustrated_midday1","feel_frustrated_midday2", "feel_frustrated_evening", "feel_overwhelmed_morning", "feel_overwhelmed_midday1", "feel_overwhelmed_midday2", "feel_overwhelmed_evening", "feel_connected_morning", "feel_connected_midday1","feel_connected_midday2", "feel_connected_evening", "feel_happy_morning", "feel_happy_midday1", "feel_happy_midday2", "feel_happy_evening", "feel_lonely_morning","feel_lonely_midday1", "feel_lonely_midday2", "feel_lonely_evening", 
+"Orientation_B1", "URM_B1", "Engineer_B1", "Sexuality_MID", "Gender_MFO_B1")
+
+EMA<-UWEXP.2[EMA_s]
+
+EMA <- subset(EMA, date=='2018-01-09'|date=='2018-01-10'|date=='2018-01-11'|date == '2018-01-12'|date == '2018-01-13'|date == '2018-01-14'|date == '2018-01-16'|date == "2018-01-17"|date == "2018-01-20"|date == "2018-01-21"|date == '2018-01-22'|date == "2018-01-23"|date == "2018-01-24"|date == "2018-01-27"|date == "2018-01-28"|date == "2018-01-31"|date == "2018-02-01"|date == "2018-02-02"|date == "2018-02-03"|date == "2018-02-04"|date == "2018-02-05"|date == "2018-02-06"|date == "2018-02-07"|date == "2018-02-10"|date == "2018-02-11"|date == "2018-02-13"|date == "2018-02-14"|date == "2018-02-17"|date == "2018-02-18"|date == "2018-02-20"|date == "2018-02-21"|date == "2018-02-24"|date == "2018-02-25"|date == "2018-02-28"|date == "2018-03-01"|date == "2018-03-02"|date == "2018-03-03"|date == "2018-03-04"|date == "2018-03-05"|date == "2018-03-06"|date == "2018-03-07"|date == "2018-03-10"|date == "2018-03-11"|date == "2018-03-13"|date == "2018-03-14"|date == "2018-03-17"|date == "2018-03-18"|date == "2018-03-20"|date == "2018-03-21"|date == "2018-03-27"|date == "2018-03-28"|date == "2018-03-31"|date == "2018-04-01"|date == "2018-04-03"|date == "2018-04-04"|date == "2018-04-07"|date == "2018-04-08"|date == "2018-04-10"|date == "2018-04-11"|date == "2018-04-14"|date == "2018-04-15"|date == "2018-04-18"|date == "2018-04-19"|date == "2018-04-20"|date == "2018-04-21"|date == "2018-04-22"|date == "2018-04-23"|date == "2018-04-24"|date == "2018-04-25"|date == "2018-04-28"|date == "2018-04-29"|date == "2018-05-01"|date == "2018-05-02"|date == "2018-05-05"|date == "2018-05-06"|date == "2018-05-08"|date == "2018-05-09"|date == "2018-05-10"|date == "2018-05-12"|date == "2018-05-13"|date == "2018-05-16"|date == "2018-05-17"|date == "2018-05-18"|date == "2018-05-19"|date == "2018-05-20"|date == "2018-05-21"|date == "2018-05-22"|date == "2018-05-23"|date == "2018-05-26"|date == "2018-05-27"|date == "2018-05-29"|date == "2018-05-30"|date == "2018-06-02"|date == "2018-06-03")
+
+write.csv(EMA, "~/Downloads/EMA(11).csv")
+
+##Note, need to delete the first row in excel so that the dates of discrimination are on same 
+##line as affect ratings # YSS can apply to both daily and weekly only when analying next day response
+
+EMA<-read.csv("~/Downloads/EMA(11).csv")
+
+EMA$discriminated<-as.vector(EMA$discriminated)
+EMA$discriminated[EMA$discriminated=="YES"]<-1
+EMA$discriminated[EMA$discriminated=="NO"]=0
+EMA$discriminated<-as.numeric(EMA$discriminated)
+
+EMA_notcleaned <- EMA # YSS added
+
+library(dplyr)
+EMA<- EMA %>% # YSS what does this syntax do?
+  filter(!is.na(discriminated))
+
+write.csv(EMA, "~/Downloads/EMA(9).csv")
+```
+```{r}
+counts<-as.data.frame(table(EMA$PID)) # YSS: what does this do?
+
+
+# YSS: what is this?
+EMA$time<-c(1:48,1:52, 1:50,1:51, 1:54, 1:56,1:53,1:56,1:39,1:48,1:52,1:46,1:44,1:57,1:57,1:39,1:53,1:10,1:56,1:52,1:50,1:53,1:52,1:54,1:49,1:42,1:48,1:52,1:53,1:56, 1:54,1:51, 1:52,1:52, 1:55, 1:56, 1:53, 1:52, 1:54, 1:52, 1:57, 1:56,1:53,1:49,1:52,1:52,1:51,1:49,1:54,1:38,1:50,1:48,1:54,1:54,1:52,1:49,1:44,1:51,
+1:55,1:47,1:34,1:53, 1:48,1:49, 1:56, 1:56,1:28,1:53,1:4, 1:55,1:54,1:54,1:55,1:52, 1:56,1:49,1:41,1:55,1:27, 1:51,1:7,1:52,1:56,1:52,1:56,1:44,1:55, 1:54, 1:56,1:47, 1:50,1:53, 1:54,1:45, 1:50, 1:52,1:15,1:37,1:45,1:47,1:55,1:40,1:51, 1:56, 1:50, 1:44,1:55,1:35,1:49, 1:30, 1:53,1:57,1:56,1:54,1:39,1:57,1:44,1:48,1:47,1:29, 1:56,1:52, 1:54,1:54, 1:56, 1:56,1:9,1:38,1:16,1:54,1:57,1:49,1:55,1:44,1:42,1:47,1:50,1:49,1:55,1:46,1:51,1:54,1:47,1:41,1:36,1:49,1:56,1:52,1:55,1:39, 1:47,1:33, 1:45,1:49, 1:45,1:55,1:39,1:53, 1:54,1:45,1:50, 1:49,1:54,1:49,1:52,1:54,1:55,1:51,1:51,1:51,1:48,1:49,1:51,1:23,1:53,1:51,1:36,1:53,1:53,1:50, 1:40,1:45, 1:46,1:23, 1:47, 1:54,1:50,1:52,1:34, 1:45,1:54,1:22,1:55,1:37,1:35,1:26,1:49,1:43,1:46,1:31,1:47)
+  
+#EMA %>% 
+#  select(EMA_s) %>%
+#  filter(discriminated == "1")
+
+library(psych)
+library(ggplot2)
+library(lme4)
+
+##what differentiates people who have been exposed to discrimination 
+##and those who have not?
+# 
+# EMA %>% 
+#   select(EMA_s) %>%
+#   filter(discriminated == "1")
+``` 
+
+
+```{r} 
+# YSS what is the ``` above?
+demo<-subset(UWEXP.2, !duplicated(PID))
+dis<-c("PID", "discriminated", "date")
+dis<-EMA[dis]
+d<-as.data.frame(aggregate(dis[,2], list(dis$PID), mean, na.rm=T))
+demo$discrim_avg<-d$x
+discrm_avg<-demo$discrim_avg # YSS where is this defined
+library(car)
+demo$discrim_yn<-recode(demo$discrim_yn,"0.01:1=1")
+
+# YSS check the table demo
+chisq.test(demo$URM_B1, demo$discrim_yn)
+
+table(demo$URM_B1, demo$discriminated)
+
+#For URM, they report discrimination about 6.9% of the time, non-URM experience discriminaton
+##in about 4.3% of reports
+
+##20% of discrimination reports are by URM Compose about ~14% of
+## the sample? 
+
+chisq.test(demo$Sexuality_MID, demo$discrim_yn)
+
+table(demo$Sexuality_MID, demo$discrim_yn)
+
+#6.2% of reports are discriminatory for sexual minority, 4.3% for non (make up 12.4% 
+## of the sample) -- 17.97% of the discrimination reports are by sexual minority students. 
+
+# YSS check the table demo. Why UWEXP.2 and not demo here? Is it fine to pass the repeated data entries?
+chisq.test(UWEXP.2$Gender_MFO_B1, UWEXP.2$discriminated)
+table(UWEXP.2$Gender_MFO_B1, UWEXP.2$discriminated)
+
+chisq.test(UWEXP.2$Gender_MFO_POST, UWEXP.2$discriminated)
+
+table(demo$Gender_MFO_POST, demo$discriminated)
+
+#Women report discrimination in about 5% of reports, men report about 3.7%.
+##Women report about 72.76% of the discrimination reports (are they 37.8% of the sample?). 
+
+chisq.test(UWEXP.2$Engineer_B1, UWEXP.2$discriminated)
+chisq.test(UWEXP.2$Engineer_MID, UWEXP.2$discriminated)
+chisq.test(UWEXP.2$Engineer_POST, UWEXP.2$discriminated)
+
+##Engineering students not at baseline but significant differences at post session
+##engineering loses a net of 8 students over the study. 
+
+##Engineering students report about 5% rate of discrimination, non-engineering is about 3.8%. 
+
+##Self compassion as a predictor
+```
+
+```{r}
+describe(UWEXP$discriminated)
+
+##high standard deviation and skew relative to mean (.05)
+##suggesting that a few people are reporting a lot of instances of discrimination
+
+hist(UWEXP$discriminated)
+
+##454 instances of reported discrimination (459.2/209 = ~2.172/person)
+
+disc<-c("PID", "discriminated")
+disc<-UWEXP[disc]
+d<-as.data.frame(aggregate(disc[, 2], list(PID), mean, na.rm=T))
+
+##THIS IS ALL MISSING FOR TYPES OF DISCRIMINATION
+describe(UWEXP[,c("unfair_age","unfair_appearance", "unfair_disability",
+                  "unfair_gender", "unfair_height", "unfair_income",
+                  "unfair_intelligence", "unfair_learning", "unfair_major",
+                  "unfair_national", "unfair_not", "unfair_orientation",
+                  "unfair_religion", "unfair_weight", "unfair_yesno")],na.rm=T)
+
+table(UWEXP$PID, UWEXP$discriminated)
+
+plot(UWEXP$PID~UWEXP$discriminated)
+
+# YSS UWEXP pre/post scores are wrong
+describe(UWEXP[,c("BDI_II_POST")],na.rm=T)
+describe(UWEXP[,c("feel_depressed_morning", "feel_depressed_midday1", 
+                  "feel_depressed_midday2", "feel_depressed_evening")],na.rm=T)
+describe(UWEXP[,c("feel_depressed_weekly")])
+hist(UWEXP$feel_depressed_weekly)
+
+describe(UWEXP[,c("feel_anxious_morning", "feel_anxious_midday1", 
+                  "feel_anxious_midday2", "feel_anxious_evening")],na.rm=T)
+describe(UWEXP[,c("feel_anxious_weekly")], na.rm=T)
+hist(UWEXP$feel_anxious_weekly)
+
+describe(UWEXP[,c("feel_connected_morning", "feel_connected_midday1", 
+                  "feel_connected_midday2", "feel_connected_evening")],na.rm=T)
+describe(UWEXP[,c("feel_connected_weekly")], na.rm=T)
+hist(UWEXP$feel_connected_weekly)
+
+describe(UWEXP[,c("feel_frustrated_morning", "feel_frustrated_midday1", 
+                  "feel_frustrated_midday2", "feel_frustrated_evening")],na.rm=T)
+describe(UWEXP[,c("feel_frustrated_weekly")], na.rm=T)
+hist(UWEXP$feel_frustrated_weekly)
+
+describe(UWEXP[,c("feel_overwhelmed_morning", "feel_overwhelmed_midday1", 
+                  "feel_overwhelmed_midday2", "feel_overwhelmed_evening")],na.rm=T)
+describe(UWEXP[,c("feel_overwhelmed_weekly")], na.rm=T)
+hist(UWEXP$feel_overwhelmed_weekly)
+
+describe(UWEXP[,c("feel_lonely_morning", "feel_lonely_midday1", 
+                  "feel_lonely_midday2", "feel_lonely_evening")],na.rm=T)
+describe(UWEXP[,c("feel_lonely_weekly")], na.rm=T)
+hist(UWEXP$feel_lonely_weekly)
+
+describe(UWEXP[,c("PSS_PRE", "PSS_POST")],na.rm=T)
+describe(UWEXP[,c("UCLA_Loneliness_PRE","UCLA_Loneliness_POST")],na.rm=T)
+```
+#Compare these people on
+
+##long-terms outcomes as measured at the end of study 
+##anxiety
+```{r}
+dis<-c("PID", "discriminated", "date")
+anx<-c("PID", "STAI_POST")
+anx<-UWEXP[anx]
+dis<-UWEXP[dis]
+
+dis$discriminated<-as.vector(dis$discriminated)
+dis$discriminated[dis$discriminated=="YES"]<-1
+dis$discriminated[dis$discriminated=="NO"]=0
+dis$discriminated<-as.numeric(dis$discriminated)
+
+# YSS this is unclear
+d<-as.data.frame(aggregate(dis[,2], list(dis$PID), mean, na.rm=T))
+e<-as.data.frame(aggregate(anx[, 2], list(anx$PID), mean, na.rm=T))
+STAI_POST<-e$x # YSS what is x?
+sensor$discrim_avg<-d$x
+
+anx_disc<-data.frame<-c(STAI_POST, discrim_avg)
+
+summary(lm(STAI_POST~discrim_avg)) # YSS what is lm
+
+UWEXP$STAI_change=UWEXP$STAI_POST-UWEXP$STAI_PRE
+
+STAI_c<-c("PID", "STAI_change")
+STAI_c<-UWEXP[STAI_c]
+s<-as.data.frame(aggregate(STAI_c[, 2], list(STAI_c$PID), mean, na.rm=T))
+STAI_change<-s$x
+
+summary(lm(STAI_change~discrim_avg))
+
+plot(STAI_POST~discrim_avg)
+plot(STAI_change~discrim_avg)
+```
+##Discrimination explains about 4% of the variance on post anxiety levels (there 
+## is a signiificant difference in that as average daily reports of discrimination rise,
+##levels of anxiety increase)
+  
+##depression
+```{r}
+dep<-c("PID", "BDI_II_POST")
+dep<-UWEXP[dep]
+g<-as.data.frame(aggregate(dep[, 2], list(dep$PID), mean, na.rm=T))
+BDI<-g$x
+discrim_avg<-d$x
+dep_disc<-data.frame<-c(BDI, discrim_avg)
+
+summary(lm(BDI~discrim_avg))
+
+UWEXP$BDI_change=UWEXP$BDI_II_POST-UWEXP$BDI_II_PRE
+BDI_c<-c("PID", "BDI_change")
+BDI_c<-UWEXP[BDI_c]
+b<-as.data.frame(aggregate(BDI_c[, 2], list(BDI_c$PID), mean, na.rm=T))
+BDI_change<-b$x
+
+summary(lm(BDI_change~discrim_avg))
+
+plot(BDI~discrim_avg)
+```
+##Discrimination explains about 6% of the variance on depression scores. There is 
+  ##a significant increase in that as average daily levels of discrimination increase,
+  ##scores of depression increase
+  
+## Note: Only looking at post-scores may open up the question of whether people 
+  ##who are depressed or anxious are more likely to perceive instances as discriminatory
+  ##rather than instances of discrimination explaining any changes in these levels
+  ##-- might do a change score (post-pre)
+  
+##stress
+```{r}
+stress<-c("PID", "PSS_POST")
+stress<-UWEXP[stress]
+h<-as.data.frame(aggregate(stress[, 2], list(stress$PID), mean, na.rm=T))
+PSS<-h$x
+stress_disc<-data.frame<-c(PSS, discrim_avg)
+
+summary(lm(PSS~discrim_avg))
+
+plot(PSS~discrim_avg)
+
+UWEXP$PSS_change=UWEXP$PSS_POST-UWEXP$PSS_PRE
+PSS_c<-c("PID", "PSS_change")
+PSS_c<-UWEXP[PSS_c]
+t<-as.data.frame(aggregate(PSS_c[, 2], list(PSS_c$PID), mean, na.rm=T))
+PSS_change<-t$x
+
+summary(lm(PSS_change~discrim_avg))
+```
+##Discrimination is explains 4% of the variance in levels of stress -- significant association
+
+##affect -- WHICH TYPE? ANXIETY, DEPRESSION, ETC. For people who have reported discrimination
+## average affect ratings on days they had vs days they had not. ##Ratings were different.
+
+##loneliness
+```{r}
+lonely<-c("PID", "UCLA_Loneliness_POST")
+lonely<-UWEXP[lonely]
+l<-as.data.frame(aggregate(lonely[, 2], list(lonely$PID), mean, na.rm=T))
+UCLA<-l$x
+lonely_disc<-data.frame<-c(UCLA, discrim_avg)
+
+summary(lm(UCLA~discrim_avg))
+
+plot(UCLA~discrim_avg)
+
+UWEXP$UCLA_change=UWEXP$UCLA_Loneliness_POST-UWEXP$UCLA_Loneliness_PRE
+UCLA_c<-c("PID", "UCLA_change")
+UCLA_c<-UWEXP[UCLA_c]
+u<-as.data.frame(aggregate(UCLA_c[, 2], list(UCLA_c$PID), mean, na.rm=T))
+UCLA_change<-u$x
+
+summary(lm(UCLA_change~discrim_avg))
+```
+##Loneliness explains about 3% of the variance in loneliness levels - significant association
+
+##short-term outcomes as measured periodically during the study 
+##anxiety 
+```{r}
+avg_anx<-c("date", "PID", "discriminated", "feel_anxious_weekly", "feel_anxious_morning", "feel_anxious_midday1", "feel_anxious_midday2", "feel_anxious_evening", "time")
+avg_anx<-EMA[avg_anx]
+#avg_anx<-sensor[avg_anx]
+
+neg_av<-c("date", "PID", "discriminated","feel_anxious_weekly", "feel_anxious_morning", "feel_anxious_midday1", "feel_anxious_midday2", "feel_anxious_evening", "feel_overwhelmed_weekly", "feel_overwhelmed_morning", "feel_overwhelmed_midday1", "feel_overwhelmed_midday2", "feel_overwhelmed_evening","feel_frustrated_weekly", "feel_frustrated_morning", "feel_frustrated_midday1", "feel_frustrated_midday2", "feel_frustrated_evening", "feel_depressed_weekly", "feel_depressed_morning", 
+"feel_depressed_midday1", "feel_depressed_midday2", "feel_depressed_evening", "feel_lonely_weekly", "feel_lonely_morning", "feel_lonely_midday1", "feel_lonely_midday2", "feel_lonely_evening")
+avg_neg<-sensor[neg_av]
+
+#sensor$avg_anx<- rowMeans(avg_anx[,c(4:8)], na.rm=T)
+EMA$avg_anx<- rowMeans(avg_anx[,c(4:8)], na.rm=T)
+sensor$avg_neg<- rowMeans(avg_neg[,c(4:28)], na.rm=T)
+library(nlme)
+
+# YSS check the table
+#stanx<-lme(avg_anx~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit) # YSS what is lme?
+stanx<-lme(avg_anx~time+discriminated, random=~time+discriminated|PID, data=EMA, na.action=na.omit)
+anova(stanx)
+```           
+##Days that there are reports of discrimination -- either the weekly or the morning ratings
+## Week of 1/7, then the 1/6 column of discrimination has been marked. Differences between 
+##weekly and daily. Take out the ratings of the next when they are available. 
+## only available if they did the survey on the next day. For the same day, using the evening
+## EMAs. ## Day before on discrimination for weekly EMAs. ##Date and shift for one day
+##Shift from one day -- Feb 1st through Feb 7th. Affect ratings correspond to next day.
+
+```{r}
+describe(anx_EMA$avg_anx)
+
+his(anx_EMA$avg_anx)
+
+mu.group<-tapply(anx_EMA$avg_anx,anx_EMA$PID,mean) # YSS what is happening here?
+mu.group
+
+summary(lmer(avg_anx~1+(1|PID), data=anx_EMA)) # YSS what is happening here?
+
+hist(mu.group)
+
+PID.factor<-factor(anx_EMA$PID) # YSS what is happening here?
+par(mfrow=c(1,1)) # YSS what is happening here?
+ggplot(data=EMA, aes(time,avg_anx, group=PID.factor)) + 
+  geom_boxplot(aes(time, avg_anx, group=PID.factor)) + 
+  geom_point() + theme_bw() + 
+  theme(legend.position="none", axis.text.x = element_blank()) + 
+  aes(color=PID.factor) + 
+  stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 0.25)
+
+##stress
+##how much do the demands exceeed ability to cope. What are the types of demands that you 
+## facing. People who experience discrimination, more likely to consider challenges as 
+## threats-- not in the data file yet. 
+avg_stress<-c("date", "PID", "discriminated", "demand_excessive_weekly")
+avg_stress<-EMA[avg_stress]
+
+##This depends on the structure of the data
+
+ststress<-lme(avg_stress~time+discriminated, random=~time|PID, data=EMA, na.action=na.omit)
+anova(ststress)
+
+demands_weekly<-UWEXP$demand_excessive_weekly #this will be the same as weekly and daily EMA ratings (continuous)
+
+stressor_count_weekly<-UWEXP$stressor_count_weekly #categories of stressors that they reported (count)
+
+##Can check off the different stressors and can check off the stress
+
+##affect
+#Connectedness
+avg_connect<-c("date", "PID", "discriminated", "feel_connected_weekly", "feel_connected_morning", "feel_connected_midday1", "feel_connected_midday2", "feel_connected_evening", "time")
+avg_connect<-sensor[avg_connect]
+
+sensor$avg_connect<- rowMeans(avg_connect[,c(4,5,6,7,8)], na.rm=T)
+
+stconnect<-lme(avg_connect~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+#stconnect<-lme(avg_connect~time+discriminated+social_support, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+anova(stconnect)
+
+#Overhwelmed
+avg_overwhelmed<-c("date", "PID", "discriminated", "feel_overwhelmed_weekly", "feel_overwhelmed_morning", "feel_overwhelmed_midday1", "feel_overwhelmed_midday2", "feel_overwhelmed_evening", "time")
+#avg_overwhelmed<-sensor[avg_overwhelmed]
+avg_overwhelmed<-EMA[avg_overwhelmed]
+
+#sensor$avg_overwhelmed<- rowMeans(avg_overwhelmed[,c(4,5,6,7,8)], na.rm=T)
+EMA$avg_overwhelmed<- rowMeans(avg_overwhelmed[,c(4,5,6,7,8)], na.rm=T)
+
+#stoverwhelm<-lme(avg_overwhelmed~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+stoverwhelm<-lme(avg_overwhelmed~time+discriminated, random=~time+discriminated|PID, data=EMA, na.action=na.omit)
+anova(stoverwhelm)
+
+##Happy
+avg_happy<-c("date", "PID", "discriminated", "feel_happy_weekly", "feel_happy_morning", 
+                   "feel_happy_midday1", "feel_happy_midday2", "feel_happy_evening", "time")
+avg_happy<-sensor[avg_happy]
+
+sensor$avg_happy<- rowMeans(avg_happy[,c(4,5,6,7,8)], na.rm=T)
+
+sthappy<-lme(avg_happy~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+anova(sthappy)
+
+
+##Frustrated
+avg_frust<-c("date", "PID", "discriminated", "feel_frustrated_weekly", "feel_frustrated_morning", "feel_frustrated_midday1", "feel_frustrated_midday2", "feel_frustrated_evening", "time")
+avg_frust<-sensor[avg_frust]
+
+sensor$avg_frust<- rowMeans(avg_frust[,c(4,5,6,7,8)], na.rm=T)
+
+stfrust<-lme(avg_frust~time+discriminated,  random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+anova(stfrust)
+
+##substance-use
+
+##Where are the EMA measures of substance use?
+
+##depression
+avg_dep<-c("date", "PID", "discriminated", "feel_depressed_weekly", "feel_depressed_morning", 
+"feel_depressed_midday1", "feel_depressed_midday2", "feel_depressed_evening", "time")
+avg_dep<-EMA[avg_dep]
+
+EMA$avg_dep <- rowMeans(avg_dep[,c(4,5,6,7,8)], na.rm=T)
+
+stdep<-lme(avg_dep~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+anova(stdep)
+
+##loneliness
+avg_lonely<-c("date", "PID", "discriminated", "feel_lonely_weekly", "feel_lonely_morning", 
+           "feel_lonely_midday1", "feel_lonely_midday2", "feel_lonely_evening", "time")
+avg_lonely<-sensor[avg_lonely]
+
+sensor$avg_lonely <- rowMeans(avg_lonely[,c(4,5,6,7,8)], na.rm=T)
+
+stlonely<-lme(avg_lonely~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+anova(stlonely)
+
+##CWP within a person. Time over the study. Every single report of discriminatory event.
+##Number of discriminatory events. Strong split of within person variation.
+
+##AS you see an increase in discriminatory events.
+
+## of discriminatory events over time. Do we see an accumulative effect of discriminatory events over the course of the quarter. 
+
+## Most parsimoneous. Number of MLE, discrimination events. 
+
+##How many total events, massive range for discriminatory events. Hyperactive, etc. 
+##Differences in terms of factors
+
+##Behavioral markers continuously captured during the study
+sensor<-c("date", "PID", "discriminated", "feel_anxious_weekly", "feel_depressed_weekly", "feel_frustrated_weekly", "feel_overwhelmed_weekly", "feel_connected_weekly",
+"feel_happy_weekly", "feel_lonely_weekly", "feel_anxious_morning", "feel_anxious_midday1", "feel_anxious_midday2", "feel_anxious_evening", "feel_depressed_morning", "feel_depressed_midday1", "feel_depressed_midday2", "feel_depressed_evening", "feel_frustrated_morning", "feel_frustrated_midday1", "feel_frustrated_midday2", "feel_frustrated_evening", "feel_overwhelmed_morning", "feel_overwhelmed_midday1", "feel_overwhelmed_midday2", "feel_overwhelmed_evening", "feel_connected_morning", "feel_connected_midday1", "feel_connected_midday2", "feel_connected_evening", "feel_happy_morning", "feel_happy_midday1", "feel_happy_midday2", "feel_happy_evening", "feel_lonely_morning", "feel_lonely_midday1", "feel_lonely_midday2", "feel_lonely_evening","totalTimeInBed", "totalMinutesAsleep", "totalSleepRecords", "calls_duration_incoming_calls_seconds_allday", "bluetooth_number_unique_devices_of_others_allday", "calls_most_frequent_correspondent_phone_allday", "calls_number_of_correspondents_phone_allday", "activity_count_changes_allday", "activity_most_common_activity_allday", "activity_number_of_activities_allday", "locations_location_entropy_allday", "locations_home_stay_time_percent_100m_allday",
+"Orientation_B1", "URM_B1", "Engineer_B1", "Sexuality_MID", "duration_main", "minutesToFallAsleep_main", "minutesAwake_main", "timeInBed_main", "startTime_main", 
+"calls_number_rows_calls_evening", "calls_number_rows_calls_morning", "calls_duration_outgoing_calls_seconds_evening", "calls_duration_incoming_calls_seconds_evening", "calls_duration_outgoing_calls_seconds_morning", "calls_duration_incoming_calls_seconds_morning", "locations_total_distance_meters_allday", 
+"locations_total_distance_meters_morning", "locations_total_distance_meters_afternoon", "locations_total_distance_meters_morning", 
+"locations_total_distance_meters_afternoon","locations_home_stay_time_percent_100m_morning", "locations_moving_time_percent_allday", "locations_location_variance_allday",
+"locations_location_variance_log_allday", "locations_location_variance_morning",
+"locations_location_variance_log_morning", "locations_location_variance_evening", 
+"locations_location_variance_log_evening", "locations_location_entropy_allday", 
+"locations_location_entropy_normalized_allday", "locations_location_entropy_morning",
+"locations_location_entropy_normalized_morning", "locations_location_entropy_evening",
+"locations_location_entropy_normalized_evening", "locations_number_of_clusters_allday", "screen_mean_len_minute_interaction_bout_allday", "screen_number_of_minutes_unlock_morning", "screen_number_of_minutes_unlock_afternoon", "bluetooth_number_unique_devices_of_others_allday", "bluetooth_number_unique_devices_of_others_morning", 
+"bluetooth_number_unique_devices_of_others_afternoon", "bluetooth_avg_num_scans_of_all_devices_of_others_allday", "bluetooth_avg_num_scans_of_all_devices_of_others_morning", "bluetooth_avg_num_scans_of_all_devices_of_others_afternoon", "bluetooth_num_scans_of_least_frequent_device_of_others_evening", "bluetooth_avg_num_scans_of_all_devices_of_others_evening")
+sensor<-UWEXP.2[sensor]
+
+sensor <- subset(sensor, date=='2018-01-09'|date=='2018-01-10'|date=='2018-01-11'|date == '2018-01-12'|date == '2018-01-13'|date == '2018-01-14'| date == '2018-01-16'|date == "2018-01-17"|date == "2018-01-20"|date == "2018-01-21"|date == '2018-01-22'|date == "2018-01-23"|date == "2018-01-24"| date == "2018-01-27"|date == "2018-01-28"|date == "2018-01-31"|date == "2018-02-01"|date == "2018-02-02"|date == "2018-02-03"|date == "2018-02-04"| date == "2018-02-05"|date == "2018-02-06"|date == "2018-02-07"|date == "2018-02-10"|date == "2018-02-11"|date == "2018-02-13"|date == "2018-02-14"| date == "2018-02-17"|date == "2018-02-18"|date == "2018-02-20"|date == "2018-02-21"|date == "2018-02-24"|date == "2018-02-25"|date == "2018-02-28"|date == "2018-03-01"|date == "2018-03-02"|date == "2018-03-03"|date == "2018-03-04"|date == "2018-03-05"|date == "2018-03-06"|date == "2018-03-07"|date == "2018-03-10"|date == "2018-03-11"|date == "2018-03-13"|date == "2018-03-14"|date == "2018-03-17"|date == "2018-03-18"|date == "2018-03-20"|date == "2018-03-21"|date == "2018-03-27"|date == "2018-03-28"|date == "2018-03-31"|date == "2018-04-01"|date == "2018-04-03"|date == "2018-04-04"|date == "2018-04-07"|date == "2018-04-08"|date == "2018-04-10"|date == "2018-04-11"|date == "2018-04-14"|date == "2018-04-15"|date == "2018-04-18"| date == "2018-04-19"|date == "2018-04-20"|date == "2018-04-21"|date == "2018-04-22"|date == "2018-04-23"|date == "2018-04-24"|date == "2018-04-25"| date == "2018-04-28"|date == "2018-04-29"|date == "2018-05-01"|date == "2018-05-02"|date == "2018-05-05"|date == "2018-05-06"|date == "2018-05-08"| date == "2018-05-09"|date == "2018-05-10"|date == "2018-05-12"|date == "2018-05-13"|date == "2018-05-16"|date == "2018-05-17"|date == "2018-05-18"| date == "2018-05-19"|date == "2018-05-20"|date == "2018-05-21"|date == "2018-05-22"|date == "2018-05-23"|date == "2018-05-26"|date == "2018-05-27"| date == "2018-05-29"|date == "2018-05-30"|date == "2018-06-02"|date == "2018-06-03")
+
+write.csv(sensor, "~/Downloads/sensor(4).csv")
+
+##Deleting first row so that discrimination lines up with sensor data # YSS this is correct only when looking at next day response
+sensor<-read.csv("~/Downloads/sensor(6).csv")
+
+sensor$discriminated<-as.vector(sensor$discriminated)
+sensor$discriminated[sensor$discriminated=="YES"]<-1
+sensor$discriminated[sensor$discriminated=="NO"]=0
+sensor$discriminated<-as.numeric(sensor$discriminated)
+
+sensor<- sensor %>% 
+  filter(!is.na(discriminated))
+
+write.csv(sensor, "~/Downloads/sensor(6).csv")
+
+counts<-as.data.frame(table(sensor$PID))
+time<-counts$Freq
+
+sensor$time<-c(1:48,1:52, 1:50,1:51, 1:54, 1:56,1:53,1:56,1:39,1:48,1:52,1:46,1:44,1:57,1:57,1:39,1:53,1:10,1:56,1:52,1:50,1:53,1:52,1:54,1:49,1:42,1:48,1:52,1:53,1:56, 1:54,1:51, 1:52,1:52, 1:55, 1:56, 1:53, 1:52, 1:54, 1:52, 1:57, 1:56,1:53,1:49,1:52,1:52,1:51,1:49,1:54,1:38,1:50,1:48,1:54,1:54,1:52,1:49,1:44,1:51,
+1:55,1:47,1:34,1:53, 1:48,1:49, 1:56, 1:56,1:28,1:53,1:4, 1:55,1:54,1:54,1:55,1:52, 1:56,1:49,1:41,1:55,1:27, 1:51,1:7,1:52,1:56,1:52,1:56,1:44,1:55, 1:54, 1:56,1:47, 1:50,1:53, 1:54,1:45, 1:50, 1:52,1:15,1:37,1:45,1:47,1:55,1:40,1:51, 1:56, 1:50, 1:44,1:55,1:35,1:49, 1:30, 1:53,1:57,1:56,1:54,1:39,1:57,1:44,1:48,1:47,1:29, 1:56,1:52, 1:54,1:54, 1:56, 1:56,1:9,1:38,1:16,1:54,1:57,1:49,1:55,1:44,1:42,1:47,1:50,1:49,1:55,1:46,1:51,1:54,1:47,1:41,1:36,1:49,1:56,1:52,1:55,1:39, 1:47,1:33, 1:45,1:49, 1:45,1:55,1:39,1:53, 1:54,1:45,1:50, 1:49,1:54,1:49,1:52,1:54,1:55,1:51,1:51,1:51,1:48,1:49,1:51,1:23,1:53,1:51,1:36,1:53,1:53,1:50, 1:40,1:45, 1:46,1:23, 1:47, 1:54,1:50,1:52,1:34, 1:45,1:54,1:22,1:55,1:37,1:35,1:26,1:49,1:43,1:46,1:31,1:47) # YSS what is this doing?
+
+##SENSOR2 = NEXT DAY 
+sensor2<-sensor
+
+##sleep
+
+##SAME DAY SO FAR 
+sttimebed<-lme(totalTimeInBed~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(sttimebed) # YSS so we can apply anova on top of lme?
+
+stsleeprec<-lme(totalSleepRecords~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stsleeprec)
+
+stasleep<-lme(totalMinutesAsleep~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(stasleep)
+
+stduration<-lme(duration_main~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(staduration)
+
+stminsleep<-lme(minutesAwake_main~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stminsleep)
+
+sttimebed<-lme(timeInBed_main~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(sttimebed)
+
+## NEXT DAY SO FAR
+#SLEEP
+sttimebed<-lme(totalTimeInBed~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(sttimebed)
+
+stsleeprec<-lme(totalSleepRecords~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(stsleeprec)
+
+stasleep<-lme(totalMinutesAsleep~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(stasleep)
+
+stduration<-lme(duration_main~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(staduration)
+
+stminsleep<-lme(minutesAwake_main~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(stminsleep)
+
+sttimebed<-lme(timeInBed_main~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(sttimebed)
+
+sttime<-lme(startTime_main~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(sttime)
+
+library(psych)
+
+avg_dep<-c("date", "PID", "discriminated", "feel_depressed_weekly", "feel_depressed_morning", 
+           "feel_depressed_midday1", "feel_depressed_midday2", "feel_depressed_evening", "time")
+avg_dep<-sensor[avg_dep]
+
+sensor$avg_dep <- rowMeans(avg_dep[,c(4,5,6,7,8)], na.rm=T)
+
+corr.test(sensor[c("avg_dep", "totalTimeInBed", "totalSleepRecords")])
+
+##Couple things to answer -- seems odds that there is SO much missing data from the sensors,
+
+##also odd that it's sleep indices are not related to depression 
+
+##activity -- differences in mobility patterns. Whether they have been still or walking
+## How much time someone has spent at their home location. How much time somone has spent in
+##their regular visit and how much time they traveled. 
+
+sensor$activity_number_of_activities_allday<-as.numeric(sensor$activity_number_of_activities_allday)
+
+stactivity1<-lme(activity_number_of_activities_allday~time+discriminated+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stactivity1)
+```
+
+```{r}
+library(lme4)
+##SAME DAY 
+
+sensor$activity_most_common_activity_allday<-as.numeric(sensor$activity_most_common_activity_allday)
+
+sensor$activity_most_common_activity_allday[sensor$activity_most_common_activity_allday==1]<-NA
+
+stcomact<-stactivity<-glmer(activity_most_common_activity_allday ~ time + discriminated + 
+  (time|PID), data=sensor, family=poisson(link="log"), na.action=na.omit)
+
+summary(stcomact)
+
+sthome<-lme(locations_home_stay_time_percent_100m_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(sthome)
+
+stentropy<-lme(locations_location_entropy_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stentropy)
+
+st_dis<-lme(locations_total_distance_meters_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_dis)
+
+sensor$loc_mid<-sensor$locations_total_distance_meters_morning + sensor$locations_total_distance_meters_afternoon
+
+st_loc_mid<-lme(loc_mid~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_loc_mid)
+
+st_home<-lme(locations_home_stay_time_percent_100m_allday~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_home)
+
+st_home_m<-lme(locations_home_stay_time_percent_100m_morning~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_home_m)
+
+st_mov<-lme(locations_moving_time_percent_allday~time, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_mov)
+
+st_var_log<-lme(locations_location_variance_allday~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_var_log)
+
+st_var_log_m<-lme(locations_location_variance_log_morning~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_var_log_m)
+
+st_var_log_e<-lme(locations_location_variance_log_evening~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_var_log_e)
+
+st_ent<-lme(locations_location_entropy_allday~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_ent)
+
+st_ent_m<-lme(locations_location_entropy_normalized_morning~time+discriminated, random=~time+discriminated|PID, data=sensor, na.action=na.omit)
+
+anova(st_ent_m)
+
+st_clu<-lme(locations_number_of_clusters_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_clu)
+
+st_screen<-lme(screen_mean_len_minute_interaction_bout_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_screen)
+
+st_unlock<-lme(screen_number_of_minutes_unlock_morning~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_unlock)
+
+st_unlock_af<-lme(screen_number_of_minutes_unlock_afternoon~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_unlock_af)
+
+st_blue<-lme(bluetooth_number_unique_devices_of_others_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_blue)
+
+sensor$blue_mid<-sensor$bluetooth_number_unique_devices_of_others_morning + sensor$bluetooth_number_unique_devices_of_others_afternoon
+
+st_blue_mid<-lme(blue_mid~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_blue_mid)
+
+st_scan<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_scan)
+
+st_scan_am<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_morning~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_scan_am)
+
+st_scan_af<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_afternoon~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_scan_af)
+
+st_scan_eve<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_evening~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_scan_eve)
+
+st_scan_fr_eve<-lme(bluetooth_num_scans_of_most_frequent_device_of_others_evening~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(st_scan_fr_eve)
+
+## NEXT DAY
+st_dis<-lme(locations_total_distance_meters_allday~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_dis)
+
+sensor2$loc_mid<-sensor2$locations_total_distance_meters_morning + sensor2$locations_total_distance_meters_afternoon
+
+st_loc_mid<-lme(loc_mid~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_loc_mid)
+
+st_home<-lme(locations_home_stay_time_percent_100m_allday~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_home)
+
+st_home_m<-lme(locations_home_stay_time_percent_100m_morning~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_home_m)
+
+st_mov<-lme(locations_moving_time_percent_allday~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_mov)
+
+st_var_log<-lme(locations_location_variance_allday~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_var_log)
+
+st_var_log_m<-lme(locations_location_variance_log_morning~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_var_log_m)
+
+st_var_log_e<-lme(locations_location_variance_log_evening~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_var_log_e)
+
+st_ent<-lme(locations_location_entropy_allday~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_ent)
+
+st_ent_m<-lme(locations_location_entropy_normalized_morning~time+discriminated, random=~time+discriminated|PID, data=sensor2, na.action=na.omit)
+
+anova(st_ent_m)
+
+st_clu<-lme(locations_number_of_clusters_allday~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_clu)
+
+st_screen<-lme(screen_mean_len_minute_interaction_bout_allday~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_screen)
+
+st_unlock<-lme(screen_number_of_minutes_unlock_morning~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_unlock)
+
+st_unlock_af<-lme(screen_number_of_minutes_unlock_afternoon~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_unlock_af)
+
+st_blue<-lme(bluetooth_number_unique_devices_of_others_allday~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_blue)
+
+sensor2$blue_mid<-sensor$bluetooth_number_unique_devices_of_others_morning + sensor2$bluetooth_number_unique_devices_of_others_afternoon
+
+st_blue_mid<-lme(blue_mid~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_blue_mid)
+
+st_scan<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_allday~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_scan)
+
+st_scan_am<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_morning~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_scan_am)
+
+st_scan_af<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_afternoon~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_scan_af)
+
+st_scan_eve<-lme(bluetooth_avg_num_scans_of_all_devices_of_others_evening~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_scan_eve)
+
+st_scan_fr_eve<-lme(bluetooth_num_scans_of_most_frequent_device_of_others_evening~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(st_scan_fr_eve)
+
+##Social context and communicaton
+##Duration of incoming and outgoing calls (communication)
+
+corr.test(sensor[c("avg_dep", "activity_number_of_activities_allday",
+                   "locations_home_stay_time_percent_100m_allday", 
+                   "locations_location_entropy_allday")])
+
+##Interesting -- number of activities is correlated with depression at -.12 
+
+## How does this correlate with other ratings of depression
+
+##social interactions
+##bluetooth and number of calls that people have made
+
+## SAME DAY 
+sensor$sumcallse<-sensor$calls_duration_outgoing_calls_seconds_evening + sensor$calls_duration_incoming_calls_seconds_evening
+
+stcalledur<-lme(sumcallse~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stcalledur)
+
+sensor$stcallsm<- sensor$calls_duration_outgoing_calls_seconds_morning + sensor$calls_duration_incoming_calls_seconds_morning
+
+stcallsm<-lme(stcallsm~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+anova(stcallsm)
+
+stcall<-lme(calls_number_rows_calls_evening~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stcall)
+
+stcallm<-lme(calls_number_rows_calls_morning~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+ 
+anova(stcallm)
+
+## NEXT DAY
+sensor2$sumcallse<-sensor2$calls_duration_outgoing_calls_seconds_evening + sensor2$calls_duration_incoming_calls_seconds_evening
+
+stcalledur<-lme(sumcallse~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(stcalledur)
+
+sensor2$stcallsm<- sensor2$calls_duration_outgoing_calls_seconds_morning + sensor2$calls_duration_incoming_calls_seconds_morning
+
+stcallsm<-lme(stcallsm~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+anova(stcallsm)
+
+stcall<-lme(calls_number_rows_calls_evening~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+
+anova(stcall)
+
+stcallm<-lme(calls_number_rows_calls_morning~time+discriminated, random=~time|PID, data=sensor2, na.action=na.omit)
+ 
+anova(stcallm)
+
+stunique<-lme(bluetooth_number_unique_devices_of_others_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stunique)
+
+stcor<-lme(calls_number_of_correspondents_phone_allday~time+discriminated, random=~time|PID, data=sensor, na.action=na.omit)
+
+anova(stcor)
+
+avg_connect<-c("date", "PID", "discriminated", "feel_connected_weekly", 
+               "feel_connected_morning", "feel_connected_midday1", 
+               "feel_connected_midday2", "feel_connected_evening", "time")
+avg_connect<-sensor[avg_connect]
+
+sensor$avg_connect<- rowMeans(avg_connect[,c(4,5,6,7,8)], na.rm=T)
+
+avg_lonely<-c("date", "PID", "discriminated", "feel_lonely_weekly", "feel_lonely_morning", 
+              "feel_lonely_midday1", "feel_lonely_midday2", "feel_lonely_evening", "time")
+avg_lonely<-sensor[avg_lonely]
+
+sensor$avg_lonely <- rowMeans(avg_lonely[,c(4,5,6,7,8)], na.rm=T)
+
+corr.test(sensor[c("avg_connect", "avg_lonely", "bluetooth_number_unique_devices_of_others_allday", 
+                   "calls_number_of_correspondents_phone_allday")])
+```
+##Bad measures of social support -- not correlated with self-report measures of social support
+## (loneliness and connectedness)
+
+##do the differences hold if we control for initial levels 
+##of outcomes measures at the beginning of the study as well as risk and protective factors
+
+##Exclude people who did not report more than 5 discrimination events? Moderator variab
+##Significant find -- anxiety, depression, stress, loneliness at baseline. Measure of 
+## activity & depression,during EMA
+
+##Baseline multivarite
+
+```{r}
+summary(lm(PSS~discrim_avg+BDI+UCLA+STAI_POST))
+
+##Discrimination not related to other measures (everything else is related to each other)
+
+##Multivariate of significant findings [controlling for baseline levels of anxiety, etc.]
+st.multi<-lmer(avg_dep~time+activity_most_common_activity_allday+discriminated + 
+                 (time|PID) + (activity_most_common_activity_allday|PID) + 
+                 (discriminated|PID), data=sensor,
+               na.action=na.omit)
+
+anova(st.multi)
+
+summary(st.multi)
+```
+
+
+```{r}
+st.multi<-glmer(discriminated~time+activity_number_of_activities_allday+discriminated +
+                  avg_dep+ (time|PID) + (activity_number_of_activities_allday|PID) +
+                  (avg_dep|PID), data=sensor, family=binomial(link="logit"), na.action=na.omit)
+
+summary(st.multi)
+
+corr.test(sensor[c("avg_lonely", "avg_dep", "avg_frust", "discriminated")])
+```
+
+##I don't think there's enough here to go with below -- findings don't hold after controlling 
+##for baseline ratings (and change scores aren't predictive). There are correlations
+##between EMA changes but the measures below only have pre/post ratings. 
+
+```{r}
+library(tidyr)
+library(dplyr)
+plot <- c("PID", "date", "time", "avg_dep", "avg_frust")
+plot2<-c("PID", "date", "time", "avg_lonely", "avg_overwhelmed")
+
+plot<-sensor[plot]
+plot2<-sensor[plot2]
+
+plot<-na.omit(plot)
+plot2<-na.omit(plot2)
+
+
+df <- plot %>%
+  select(time, avg_dep)  %>%
+  gather(key = "variable", value = "value", -time)
+head(df, 3)
+```
+
+
+```{r}
+# Line plots based on discrimination
+ggplot(sensor,aes(x=discriminated)) +geom_bar()
+
+sensor$discriminated[sensor$discriminated==0]<-"No"
+sensor$discriminated[sensor$discriminated==1]<-"Yes"
+sensor2$discriminated[sensor$discriminated==0]<-"No"
+sensor2$discriminated[sensor$discriminated==1]<-"Yes"
+
+p1<- ggplot(data = sensor, aes(x = time, y = avg_dep, group = PID, color=discriminated))
+p1<-p1 + stat_smooth(aes(group = discriminated)) + ylim(1,5) + stat_summary(aes(group = discriminated), geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Average Depression") + xlab("time")  + scale_color_brewer(palette="Dark2") + theme(legend.position="none")
+
+p2 <- ggplot(data = sensor, aes(x = time, y = avg_frust, group = PID, color=discriminated))
+p2<- p2 + stat_smooth(aes(group = discriminated)) + ylim(1,5) + stat_summary(aes(group = discriminated), geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Average Frustration") + xlab("time") + scale_color_brewer(palette="Dark2") +  theme(legend.position="none")
+
+p3 <- ggplot(data = sensor, aes(x = time, y = avg_lonely, group = PID, color=discriminated))
+p3 <- p3 + stat_smooth(aes(group = discriminated)) + ylim(1,5) + stat_summary(aes(group = discriminated), geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Average Loneliness") + xlab("time") + scale_color_brewer(palette="Dark2") +  theme(legend.position="none")
+
+p4 <- ggplot(data = sensor, aes(x = time, y = avg_overwhelmed, group = PID, color=discriminated))
+p4 <- p4 + stat_smooth(aes(group = discriminated)) + ylim(c(1,5)) + stat_summary(aes(group = discriminated), geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Average Overwhelm")+ xlab("time") + scale_color_brewer(palette="Dark2") + theme(legend.position="none")
+
+p5 <- ggplot(data = sensor, aes(x = time, y = activity_number_of_activities_allday, group = PID, color=discriminated))
+p5 <- p5 + geom_smooth(aes(group = discriminated)) + stat_summary(aes(group = discriminated), geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Average Activities from Sensor") + xlab("time") + scale_color_brewer(palette="Dark2") 
+  
+p6 <- ggplot(data = sensor, aes(x = time, y = totalTimeInBed, group = PID, color=discriminated))
+p6 <- p6 + stat_smooth(aes(group = discriminated)) + stat_summary(aes(group=discriminated),
+    geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Total Time in Bed from Sensor")+ xlab("time")+ scale_color_brewer(palette="Dark2") + theme(legend.position="none")
+
+p7 <- ggplot(data=sensor2, aes(x=time, y = calls_number_rows_calls_morning, group = PID, color = discriminated)) 
+p7<-p7 + stat_smooth(aes(group = discriminated)) + stat_summary(aes(group=discriminated),
+    geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Number of calls in morning from sensor")+ xlab("time")+ scale_color_brewer(palette="Dark2") + theme(legend.position="none")
+
+p8 <- ggplot(data=sensor2, aes(x=time, y = screen_number_of_minutes_unlock_afternoon, group = PID, color = discriminated)) 
+p8<-p8+ stat_smooth(aes(group = discriminated)) + stat_summary(aes(group=discriminated),
+    geom = "point", fun.y = mean, shape = 16, size = 2) + ylab("Number of phone unlocks")+ xlab("time")+ scale_color_brewer(palette="Dark2") + theme(legend.position="none")
+
+
+library(gridExtra)
+grid.arrange(p1,p2, p3, p4, nrow=2, top=textGrob("Average Daily Affect Ratings and Discrimination Reports",gp=gpar(fontsize=15,font=4)))
+
+
+grid.arrange(p5,p6, nrow=2)
+```
+##social support
+
+```{r}
+g<-c("PID", "K2way_SSS_POST")
+socsup<-UWEXP[g]
+g<-as.data.frame(aggregate(socsup[, 2], list(socsup$PID), mean, na.rm=T))
+SocSup<-g$x
+summary(lm(SocSup~discrim_avg*PSS_change))
+summary(lm(SocSup~discrim_avg*BDI))
+summary(lm(SocSup~discrim_avg*STAI_POST))
+```
+
+##Interaction between discrimination and stress on post levels of social support
+  
+##substance use
+```{r}
+su<-c("PID", "CSU_Substance_POST")
+subuse<-UWEXP.2[su]
+gsu<-as.data.frame(aggregate(subuse[, 2], list(subuse$PID), mean, na.rm=T))
+SubUse<-gsu$x
+summary(lm(SubUse~discrim_avg))
+```
+
+##emotion regulation
+```{r}
+erq<-c("PID", "ERQ_Reappraisal_POST", "ERQ_Suppression_POST")
+ERQ<-UWEXP.2[erq]
+er<-as.data.frame(aggregate(ERQ[, 2], list(ERQ$PID), mean, na.rm=T))
+ers<-as.data.frame(aggregate(ERQ[,3], list(ERQ$PID), mean, na.rm=T))
+Reappraisal<-er$x
+Suppression<-ers$x
+summary(lm(Reappraisal~discrim_avg))
+summary(lm(Suppression~discrim_avg))
+```
+##resilience)?
+```{r}
+r<-c("PID", "BRS_POST")
+res<-UWEXP.2[r]
+BRS<-as.data.frame(aggregate(res[, 2], list(res$PID), mean, na.rm=T))
+
+BRS<-BRS$x
+summary(lm(BRS~discrim_avg))
+
+r_c<-c("PID", "BRS_B2", "BRS_MID", "BRS_POST")
+res<-UWEXP.2[r_c]
+BRS<-as.data.frame(aggregate(res_c[, 4], list(res$PID), mean, na.rm=T))
+BRS<-BRS$x
+summary(lm(BRS~discrim_avg))
+
+BRS_pre<-BRS<-as.data.frame(aggregate(res[, 2], list(res$PID), mean, na.rm=T))
+BRS_pre<-BRS_pre$x
+summary(lm(BRS_pre~discrim_avg))
+
+res_c$BRS_avg<-(res_c$BRS_B2+res_c$BRS_MID+res_c$BRS_POST)/3
+BRS_avg<-as.data.frame(aggregate(res_c[, 5], list(res_c$PID), mean, na.rm=T))
+BRS_avg<-BRS_avg$x
+summary(lm(BRS_avg~discrim_avg))
+```
+  
+##What is different / what changes do we observe 
+#following incidents of discrimination in terms of
+##short-term outcomes
+
+##affect
+
+##stress
+
+##substance use)
+
+##behavioral markers: 
+#is there a trend in∗places people go to after incidents of discrimination
+
+##people they interact with∗sleep and activity patterns
+
+##interactions with the phone
+
+##for the changes observed above
+##how strong are they?
+
+##what is the temporal trajectory of the changes?
+
+  ##what changes immediately kick in?
+   ## what changes take time to start?
+  ##how long does a change last?
+  ##is there any inter-relation between start / end / or co-occurrence of
+  ##different changes?
+  
+  ##is there any interaction between the trends of changes above and risk 
+##and protective factors
+
+##what correlations strongly hold between behavioral markers 
+##and–long-term outcomes–short-term outcomes

@@ -1,0 +1,19 @@
+{
+	"institution": "UW",
+	"phase": 1,
+	"survey" : "evening",
+	"data_file" : "data/evening-numVal-noLineBreak-multiColumn-internalID.csv",
+	"timeshift" : -1,
+	"empty_count_threshold" : 55,
+	"survey_date_file" : "/Users/yasaman/UWEXP/script-input/emas/survey_datetimes.csv",
+	"column_name_file" : "/Users/yasaman/UWEXP/script-input/emas/columnNames-eveningEMA.txt",
+	"column_grouping_file" : "/Users/yasaman/UWEXP/script-input/emas/scale_grouping-columns-eveningEMA.json",
+	"device_pid_file": "/Users/yasaman/UWEXP/script-input/emas/deivce_pid.csv",
+	"cleaned_data_file" : "results/emaprep/evening_cleaned.csv",
+	"prepped_data_file" : "results/emaprep/evening_preppred.csv",
+	"additional_columns" : {
+		"tags" : ["institution", "phase","survey", "long", "late"],
+		"disc" : ["unfair"],
+		"substance" : []
+	}
+}

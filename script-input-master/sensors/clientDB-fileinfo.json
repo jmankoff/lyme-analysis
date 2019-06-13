@@ -1,0 +1,17 @@
+{
+"AWARE.sqlite": ["barometer", "battery", "battery_charges", "battery_discharges", "bluetooth", "calls", "fitbit_data", "locations", "locations_visit", "network", "plugin_contacts", "plugin_ios_activity_recognition", "push_notification_device_tokens", "screen", "wifi"], 
+"applications.db": ["applications_crashes", "applications_foreground", "applications_history", "applications_notifications"], 
+"barometer.db": ["barometer"], 
+"battery.db": ["battery", "battery_charges", "battery_discharges"], 
+"bluetooth.db": ["bluetooth"], 
+"communication.db": ["calls", "messages"], 
+"locations.db": ["locations"], 
+"network_traffic.db": ["network_traffic"], 
+"network.db": ["network"], 
+"plugin_contacts.db": ["plugin_contacts"], 
+"plugin_fitbit.db": ["fitbit_data"], 
+"plugin_google_activity_recognition.db": ["plugin_google_activity_recognition"], 
+"plugin_studentlife_audio_android.db": ["plugin_studentlife_audio_android"], 
+"screen.db": ["screen"], 
+"wifi.db": ["wifi"]
+} 
